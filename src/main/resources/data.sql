@@ -1,0 +1,12 @@
+INSERT INTO Persons VALUES (1, 'xx1000', 'John', 'Liu', 'J', 'admin');
+INSERT INTO Persons VALUES (2, 'xx1001', 'Jon', 'Snow', ' ', 'reader');
+INSERT INTO Persons VALUES (3, 'xx1022','Emma', 'Watson', 'S', 'student');
+INSERT INTO Persons VALUES (4, 'xx1024','Elon', 'Musk', ' ', 'reader');
+INSERT INTO Persons VALUES (5, 'xx1025','Tiger', 'Woods', 'T', 'instructor');
+INSERT INTO Persons VALUES (6, 'xx1031','Peter',  'Pan', 'P','student');
+INSERT INTO Persons VALUES (7, 'xx2000', 'LLama', 'LlamaLast', 'J', 'admin');
+INSERT INTO Persons VALUES (8, 'xx2001', 'Squirrel', 'SquirrelLast', ' ', 'reader');
+INSERT INTO Persons VALUES (9, 'xx2022','Lion', 'LionLast', 'S', 'student');
+INSERT INTO Persons VALUES (10, 'xx2024','Monkey', 'MonkeyLast', ' ', 'reader');
+INSERT INTO Persons VALUES (11, 'xx2025','Shark', 'SharkLast', 'T', 'instructor');
+INSERT INTO Persons VALUES (12, 'xx2031','Dog',  'DogLast', 'P','student');
