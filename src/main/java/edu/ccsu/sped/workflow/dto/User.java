@@ -18,6 +18,7 @@ public class User {
 	private Integer uid;	
 	private String fname; //first name
 	private String lname; //last name
+	private Integer ccsuID;
 	private String role; 
 	private String email;
 	private String status; //user status
@@ -25,10 +26,11 @@ public class User {
 	// Constructor
 	public User() {}
 	
-	public User(Integer uid, String fname, String lname, String role, String email, String status) {
+	public User(Integer uid, String fname, String lname, Integer ccsuID, String role, String email, String status) {
 		this.uid = uid;
 		this.fname = fname;
 		this.lname = lname;
+		this.ccsuID = ccsuID;
 		this.role = role;
 		this.email = email;
 		this.status = status;
@@ -57,6 +59,14 @@ public class User {
 
 	public void setLname(String lname) {
 		this.lname = lname;
+	}
+	
+	public void setCcsuID(Integer ccsuID) {
+		this.ccsuID = ccsuID;
+	}
+	
+	public Integer getCcsuID() {
+		return ccsuID;
 	}
 
 	public String getRole() {
