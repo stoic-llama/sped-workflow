@@ -9,36 +9,34 @@ public class Persons {
 	
 	// Attributes
 	@Id
-	private Integer id;
-	private String fname; // first name
-	private String mi; // middle initial
-	private String lname; // last name
-	private String ccsuId;
-	private String type; // reader, coordinator, instructor, student
+	private Integer uid;	
+	private String fname; //first name
+	private String lname; //last name
+	private Integer ccsuID;
+	private String role; 
+	private String email;
+	private String status; //user status
 	
-	// Constructors
-	public Persons() {
-		
-	};
+	// Constructor
+	public Persons() {}
 	
-	public Persons(Integer id, String fname, String mi, String lname, String ccsuId, String type) {
-		this.id = id;
+	public Persons(Integer uid, String fname, String lname, Integer ccsuID, String role, String email, String status) {
+		this.uid = uid;
 		this.fname = fname;
-		this.mi = mi;
 		this.lname = lname;
-		this.ccsuId = ccsuId;
-		this.type = type;
+		this.ccsuID = ccsuID;
+		this.role = role;
+		this.email = email;
+		this.status = status;
 	}
 
-
-	
-	// Getting and Setters
-	public Integer getId() {
-		return id;
+	// Getters and Setters
+	public Integer getUid() {
+		return uid;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUid(Integer uid) {
+		this.uid = uid;
 	}
 
 	public String getFname() {
@@ -49,14 +47,6 @@ public class Persons {
 		this.fname = fname;
 	}
 
-	public String getMi() {
-		return mi;
-	}
-
-	public void setMi(String mi) {
-		this.mi = mi;
-	}
-
 	public String getLname() {
 		return lname;
 	}
@@ -64,20 +54,36 @@ public class Persons {
 	public void setLname(String lname) {
 		this.lname = lname;
 	}
-
-	public String getCcsuId() {
-		return ccsuId;
-	}
-
-	public void setCcsuId(String ccsuId) {
-		this.ccsuId = ccsuId;
+	
+	public void setCcsuID(Integer ccsuID) {
+		this.ccsuID = ccsuID;
 	}
 	
-	public String getType() {
-		return type;
+	public Integer getCcsuID() {
+		return ccsuID;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

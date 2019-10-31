@@ -33,13 +33,14 @@
 	                </tr>
 	            </thead>
 	            <tbody>
-	                <tr>
-	                    <td>First Name</td>
-	                    <td>Last Name</td>
-	                    <td>CCSU ID</td>
-	                    <td>Role</td>
-	                    <td>Email</td>
-	                    <td>Status</td>
+
+	                <tr th:each="user : ${users}">
+	                    <td th:text="${user.fname}"></td>
+	                    <td th:text="${user.lname}"></td>
+	                    <td th:text="${user.ccsuID}"></td>
+	                    <td th:text="${user.role}"></td>
+	                    <td th:text="${user.email}"></td>
+	                    <td th:text="${user.status}"></td>
 	                    <td><button class="btn btn-primary" type="button">Edit</button></td>
 	                </tr>
 	            </tbody>
