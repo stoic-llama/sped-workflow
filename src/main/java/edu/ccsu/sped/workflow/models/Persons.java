@@ -9,7 +9,7 @@ public class Persons {
 	
 	// Attributes
 	@Id
-	private Integer uid;	
+	private Integer id;	
 	private String fname; //first name
 	private String lname; //last name
 	private Integer ccsuID;
@@ -20,8 +20,8 @@ public class Persons {
 	// Constructor
 	public Persons() {}
 	
-	public Persons(Integer uid, String fname, String lname, Integer ccsuID, String role, String email, String status) {
-		this.uid = uid;
+	public Persons(Integer id, String fname, String lname, Integer ccsuID, String role, String email, String status) {
+		this.id = id;
 		this.fname = fname;
 		this.lname = lname;
 		this.ccsuID = ccsuID;
@@ -31,12 +31,12 @@ public class Persons {
 	}
 
 	// Getters and Setters
-	public Integer getUid() {
-		return uid;
+	public Integer getId() {
+		return id;
 	}
 
 	public void setUid(Integer uid) {
-		this.uid = uid;
+		this.id = id;
 	}
 
 	public String getFname() {
