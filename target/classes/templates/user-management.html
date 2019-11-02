@@ -13,40 +13,12 @@
 <div th:insert="fragments.html :: topnav"></div>
 
 <div class="container">
-	<div class="col">
-	    <p></p>
-	    <p><strong>Users</strong></p>
-	    <div class="row">
-	        <div class="col"><button class="btn btn-primary" type="button">Add New User</button></div>
-	    </div>
-	    <div class="table-responsive">
-	        <table class="table">
-	            <thead>
-	                <tr>
-	                    <th>First Name</th>
-	                    <th>Last Name</th>
-	                    <th>CCSU ID</th>
-	                    <th>Role</th>
-	                    <th>Email</th>
-	                    <th>Status</th>
-	                    <th>Edit</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-
-	                <tr th:each="user : ${users}">
-	                    <td th:text="${user.fname}"></td>
-	                    <td th:text="${user.lname}"></td>
-	                    <td th:text="${user.ccsuID}"></td>
-	                    <td th:text="${user.role}"></td>
-	                    <td th:text="${user.email}"></td>
-	                    <td th:text="${user.status}"></td>
-	                    <td><button class="btn btn-primary" type="button">Edit</button></td>
-	                </tr>
-	            </tbody>
-	        </table>
-	    </div>
-	</div>
-</div>
-</body>
+    		<p>
+    			<h3>SPED Workflow - User Management</h3>
+    		</p>
+    	</div>
+        <div class="container">
+			<a class="btn btn-info" href="#" th:href="@{/all}"> User List </a>
+        </div>
+    </body>
 </html>

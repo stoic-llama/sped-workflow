@@ -1,5 +1,6 @@
 package edu.ccsu.sped.workflow.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ public class UserService {
 	
 	// GET all 
 	public List<User> getUsers() {
-		return (List<User>) userRepository.findAll();
+		return new ArrayList<>(userRepository.findAll());
 	}
 	
 	// GET single instance
@@ -40,4 +41,13 @@ public class UserService {
 		userRepository.deleteById(Id);
 	}
 	
+	public void saveAll(List<User> users) {
+		
+		for(User user : users) {
+			userRepository.save(user);
+		}
+	}
+	
+	
 }
+
