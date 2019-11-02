@@ -56,7 +56,7 @@ public class UserManagementController {
 		
 		model.addAttribute("users", userService.getUsers());
 		
-		return "redirect:/users/all";
+		return "redirect:/user-management/all";
 	}
 	
 }
