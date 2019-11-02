@@ -40,12 +40,12 @@
 						</thead>
 						<tbody>
 						<tr th:each="user, itemStat : *{users}">
-							<td><input th:placeholder="First Name + ' ' + ${itemStat.count}" th:field="*{users[__${itemStat.index}__].fname}" required/></td>
-							<td><input th:placeholder="Last Name + ' ' + ${itemStat.count}" th:field="*{users[__${itemStat.index}__].lname}" required/></td>
-							<td><input th:placeholder="CCSU ID + ' ' + ${itemStat.count}" th:field="*{users[__${itemStat.index}__].ccsuID}" required/></td>
-							<td><input th:placeholder="Role + ' ' + ${itemStat.count}" th:field="*{users[__${itemStat.index}__].role}" required/></td>
-							<td><input th:placeholder="Email + ' ' + ${itemStat.count}" th:field="*{users[__${itemStat.index}__].email}" required/></td>
-							<td><input th:placeholder="Status + ' ' + ${itemStat.count}" th:field="*{users[__${itemStat.index}__].status}" required/></td>
+							<td><input th:field="*{users[__${itemStat.index}__].fname}" required/></td>
+							<td><input th:field="*{users[__${itemStat.index}__].lname}" required/></td>
+							<td><input th:field="*{users[__${itemStat.index}__].ccsuID}" required/></td>
+							<td><input th:field="*{users[__${itemStat.index}__].role}" required/></td>
+							<td><input th:field="*{users[__${itemStat.index}__].email}" required/></td>
+							<td><input th:field="*{users[__${itemStat.index}__].status}" required/></td>
 						</tr>
 						</tbody>
 					</table>

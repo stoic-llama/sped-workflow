@@ -42,18 +42,12 @@
 						<tbody>
 						<tr th:each="user, itemStat : ${form.users}">
 							<td><input hidden th:name="|users[${itemStat.index}].id|" th:value="${user.getId()}"/></td>
-							<td><input th:placeholder="First Name + ' ' + ${itemStat.count}" th:name="|users[${itemStat.index}].fname|" th:value="${user.getFname()}"
-									   required/></td>
-							<td><input th:placeholder="Last Name + ' ' + ${itemStat.count}" th:name="|users[${itemStat.index}].lname|"
-									   th:value="${user.getLname()}" required/></td>
-							<td><input th:placeholder="CCSU ID + ' ' + ${itemStat.count}" th:name="|users[${itemStat.index}].ccsuID|"
-									   th:value="${user.getCcsuID()}" required/></td>
-							<td><input th:placeholder="Role + ' ' + ${itemStat.count}" th:name="|users[${itemStat.index}].role|"
-									   th:value="${user.getRole()}" required/></td>
-							<td><input th:placeholder="Email + ' ' + ${itemStat.count}" th:name="|users[${itemStat.index}].email|"
-									   th:value="${user.getEmail()}" required/></td>
-							<td><input th:placeholder="Status + ' ' + ${itemStat.count}" th:name="|users[${itemStat.index}].status|"
-									   th:value="${user.getStatus()}" required/></td>
+							<td><input th:name="|users[${itemStat.index}].fname|" th:value="${user.getFname()}" required/></td>
+							<td><input th:name="|users[${itemStat.index}].lname|" th:value="${user.getLname()}" required/></td>
+							<td><input th:name="|users[${itemStat.index}].ccsuID|" th:value="${user.getCcsuID()}" required/></td>
+							<td><input th:name="|users[${itemStat.index}].role|" th:value="${user.getRole()}" required/></td>
+							<td><input th:name="|users[${itemStat.index}].email|" th:value="${user.getEmail()}" required/></td>
+							<td><input th:name="|users[${itemStat.index}].status|" th:value="${user.getStatus()}" required/></td>
 						</tr>
 						</tbody>
 					</table>
