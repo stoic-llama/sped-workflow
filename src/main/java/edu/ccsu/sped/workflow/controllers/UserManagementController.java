@@ -18,10 +18,17 @@ import edu.ccsu.sped.workflow.services.UserService;
 
 @Controller
 @RequestMapping("/user-management")
+
 public class UserManagementController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@GetMapping("")
+	public String userManagement(Model model) {
+		model.addAttribute("users", userService.getUsers());
+		return "user-management";
+	}
 	
 	@GetMapping(value = "/all")
 	public String showAll(Model model) {
