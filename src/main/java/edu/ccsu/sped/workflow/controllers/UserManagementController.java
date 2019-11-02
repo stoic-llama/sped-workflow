@@ -29,13 +29,13 @@ public class UserManagementController {
 		model.addAttribute("users", userService.getUsers());
 		return "user-management";
 	}
-	
+	/*
 	@GetMapping(value = "/all")
 	public String showAll(Model model) {
 		model.addAttribute("users", userService.getUsers());
 		return "allUsers";
 	}
-	
+	*/
 	@GetMapping(value = "/create")
 	public String showCreateForm(Model model) {
 		UserCreationDto usersForm = new UserCreationDto();
@@ -63,7 +63,7 @@ public class UserManagementController {
 		
 		model.addAttribute("users", userService.getUsers());
 		
-		return "redirect:/user-management/all";
+		return "redirect:/user-management";
 	}
 	
 }
