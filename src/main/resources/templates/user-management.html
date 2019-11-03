@@ -39,7 +39,7 @@
 						<td><span th:text="${user.fname}"> First Name </span></td>
 						<td><span th:text="${user.lname}"> Last Name </span></td>
 						<td><span th:text="${user.ccsuID}"> CCSU ID </span></td>
-						<td><span th:text="${user.role}"> Role </span></td>
+						<td><span th:text="${mapRoles.get(user.role)}"> Role </span></td>
 						<td><span th:text="${user.email}"> E-mail </span></td>
 						<td><span th:text="${user.status}"> Status </span></td>
 					</tr>

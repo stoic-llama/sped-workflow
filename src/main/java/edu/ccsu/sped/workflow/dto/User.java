@@ -1,8 +1,10 @@
 package edu.ccsu.sped.workflow.dto;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -14,13 +16,27 @@ import javax.persistence.Table;
 public class User {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name = "id", nullable= false)
 	private Integer id;	
+	
+	@Column(name = "fname")
 	private String fname; //first name
+	
+	@Column(name = "lname")
 	private String lname; //last name
+	
+	@Column(name = "ccsuid")
 	private Integer ccsuID;
+	
+	@Column(name = "role")
 	private String role; 
+	
+	
+	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "status")
 	private String status; //user status
 	
 	// Constructor
@@ -41,7 +57,7 @@ public class User {
 		return id;
 	}
 
-	public void setUid(Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

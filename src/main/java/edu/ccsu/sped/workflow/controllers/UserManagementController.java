@@ -3,6 +3,7 @@ package edu.ccsu.sped.workflow.controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,18 +25,20 @@ public class UserManagementController {
 	@Autowired
 	private UserService userService;
 	
+	private Map<String, String> mapRoles = Map.of(
+		"reader", "Reader",
+		"instructor", "Instructor",
+		"coordinator", "Coordinator",
+		"student", "Student"
+	);
+
 	@GetMapping("")
 	public String userManagement(Model model) {
 		model.addAttribute("users", userService.getUsers());
+		model.addAttribute("mapRoles",mapRoles);
 		return "user-management";
 	}
-	/*
-	@GetMapping(value = "/all")
-	public String showAll(Model model) {
-		model.addAttribute("users", userService.getUsers());
-		return "allUsers";
-	}
-	*/
+
 	@GetMapping(value = "/create")
 	public String showCreateForm(Model model) {
 		UserCreationDto usersForm = new UserCreationDto();
@@ -43,6 +46,7 @@ public class UserManagementController {
 		usersForm.addUser(new User());
 		
 		model.addAttribute("form",usersForm);
+		model.addAttribute("mapRoles",mapRoles);
 		
 		return "createUsersForm";
 	}
@@ -53,6 +57,7 @@ public class UserManagementController {
 		userService.getUsers().iterator().forEachRemaining(users::add);
 		
 		model.addAttribute("form", new UserCreationDto(users));
+		model.addAttribute("mapRoles",mapRoles);
 		
 		return "editUsersForm";
 	}

@@ -9,6 +9,9 @@
 	<title>Edit Users</title>
 </head>
 <body>
+
+<div th:insert="fragments.html :: topnav"></div>
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
@@ -45,9 +48,22 @@
 							<td><input th:name="|users[${itemStat.index}].fname|" th:value="${user.getFname()}" required/></td>
 							<td><input th:name="|users[${itemStat.index}].lname|" th:value="${user.getLname()}" required/></td>
 							<td><input th:name="|users[${itemStat.index}].ccsuID|" th:value="${user.getCcsuID()}" required/></td>
-							<td><input th:name="|users[${itemStat.index}].role|" th:value="${user.getRole()}" required/></td>
+							<td><select th:name="|users[${itemStat.index}].role|">
+
+								<option th:each="entry : ${mapRoles.entrySet()}"
+										th:value="${entry.key}"
+										th:utext="${entry.value}"
+										th:selected="${entry.key==user.getRole()} ? true : false">
+								</option> 
+							</select>
+							</td>
 							<td><input th:name="|users[${itemStat.index}].email|" th:value="${user.getEmail()}" required/></td>
-							<td><input th:name="|users[${itemStat.index}].status|" th:value="${user.getStatus()}" required/></td>
+							<td><select th:name="|users[${itemStat.index}].status|">
+								<option th:value="ACTIVE" th:text="ACTIVE" th:selected="${user.getStatus()=='ACTIVE'} ? true : false"></option>
+								<option th:value="INACTIVE" th:text="INACTIVE" th:selected="${user.getStatus()=='INACTIVE'} ? true : false"></option> 
+							</select>
+							</td>
+
 						</tr>
 						</tbody>
 					</table>
