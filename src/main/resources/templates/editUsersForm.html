@@ -44,7 +44,7 @@
 						</thead>
 						<tbody>
 						<tr th:each="user, itemStat : ${form.users}">
-							<td><input hidden th:name="|users[${itemStat.index}].id|" th:value="${user.getId()}"/></td>
+							<td><input hidden th:name="|users[${itemStat.index}].uid|" th:value="${user.getUid()}"/></td>
 							<td><input th:name="|users[${itemStat.index}].fname|" th:value="${user.getFname()}" required/></td>
 							<td><input th:name="|users[${itemStat.index}].lname|" th:value="${user.getLname()}" required/></td>
 							<td><input th:name="|users[${itemStat.index}].ccsuID|" th:value="${user.getCcsuID()}" required/></td>
