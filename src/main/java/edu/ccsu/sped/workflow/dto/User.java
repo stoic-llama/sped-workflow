@@ -1,20 +1,24 @@
 package edu.ccsu.sped.workflow.dto;
 
-import javax.persistence.CascadeType;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="UserDTO")
 public class User {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer uid;	
 	private String fname; //first name
 	private String lname; //last name
@@ -22,19 +26,24 @@ public class User {
 	private String email;
 	private String status; //user status
 	
+	@ManyToMany(mappedBy="user") // mapped by user attribute in Workflow object, so avoid duplicate third table map uid to wid
+	@JsonBackReference
+	private List<Workflow> workflow; 
+	
 	// Constructor
 	public User() {}
-	
-	public User(Integer uid, String fname, String lname, String role, String email, String status) {
+
+	public User(Integer uid, String fname, String lname, String role, String email, String status,
+			List<Workflow> workflow) {
 		this.uid = uid;
 		this.fname = fname;
 		this.lname = lname;
 		this.role = role;
 		this.email = email;
 		this.status = status;
+		this.workflow = workflow;
 	}
 
-	// Getters and Setters
 	public Integer getUid() {
 		return uid;
 	}
@@ -82,8 +91,13 @@ public class User {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
-	
+
+	public List<Workflow> getWorkflow() {
+		return workflow;
+	}
+
+	public void setWorkflow(List<Workflow> workflow) {
+		this.workflow = workflow;
+	}
 	
 }

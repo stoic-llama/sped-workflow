@@ -6,67 +6,111 @@
 	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
 	<meta charset="ISO-8859-1"/>
-	<title>SPED Workflow - User Management</title>
+	<title>SPED Workflow - Workflow Management - Start New Workflow</title>
 </head>
 <body>
 
 <div th:insert="fragments.html :: topnav"></div>
 
 <div class="container">
-	<div class="col">
-	    <p></p>
-	    <p><strong>Workflow Management</strong></p>
-	    <div class="table-responsive">
-	        <table class="table">
-	            <thead>
-	                <tr>
-	                    <th>Primary Reader</th>
-	                    <th>Student</th>
-	                    <th>Secondary Reader</th>
-	                    <th>Start New Workflow</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr>
-	                    <td>
-							<select class="form-control" id="id">
-								<option value="0">--Select Primary Reader--</option>
-								<option 
-							 	th:each="persons : ${persons}" 
-							 	th:value="${persons.id}" 
-							 	th:text="${persons.lname} + ', ' + ${persons.fname} + ' ' + ${persons.mi}"
-							 	th:if="${persons.type} == 'reader'">
-								</option>
-							</select>	                    
-	                    </td>
-	                    <td>
-							<select class="form-control" id="id">
-								<option value="0">--Select Student--</option>
-								<option 
-							 	th:each="persons : ${persons}" 
-							 	th:value="${persons.id}" 
-							 	th:text="${persons.lname} + ', ' + ${persons.fname} + ' ' + ${persons.mi}"
-							 	th:if="${persons.type} == 'student'">
-								</option>
-							</select>	                    
-	                    </td>
-	                    <td>
-							<select class="form-control" id="id">
-								<option value="0">--Select Secondary Reader--</option>
-								<option 
-							 	th:each="persons : ${persons}" 
-							 	th:value="${persons.id}" 
-							 	th:text="${persons.lname} + ', ' + ${persons.fname} + ' ' + ${persons.mi}"
-							 	th:if="${persons.type} == 'reader'">
-								</option>
-							</select>	                    
-	                    </td>
-	                   	<td><button class="btn btn-primary" type="button">Start</button></td>
-	                </tr>
-	            </tbody>
-	        </table>
-	    </div>
+	
+	<!-- Start New Workflow -->
+	<div class="row mt-2">
+		<div class="col">
+		    <p></p>
+		    <p><strong>Start New Workflow</strong></p>
+		    <div class="table-responsive">
+			    <form th:action="@{/addWorkflow/}" th:object="${workflow}" method="post">
+		        <table class="table">
+		            <thead>
+		                <tr>
+		                    <th>Primary Reader</th>
+		                    <th>Student</th>
+		                    <th>Secondary Reader</th>
+		                    <th>Start New Workflow</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <tr>
+		                    <td>
+								<select class="form-control" id="id" th:field="*{primaryReaderUid}">
+									<option value="0">---Select Primary Reader---</option>
+									<option  	
+									th:each="user,iterStat:${users}" 
+								 	th:value="${user.uid}" 
+								 	th:text="${user.lname} + ', ' + ${user.fname}"
+								 	th:if="${user.role} == 'primaryreader'">
+									</option>
+								</select>	                    
+		                    </td>
+		                    <td>  
+								<select class="form-control" id="id" th:field="*{studentUid}">
+									<option value="0">---Select Student---</option>
+									<option 
+									th:each="user,iterStat:${users}" 
+								 	th:value="${user.uid}" 
+								 	th:text="${user.lname} + ', ' + ${user.fname}"
+								 	th:if="${user.role} == 'student' and ${user.status} == 'ACTIVE'">
+									</option>
+								</select>	                    
+		                    </td>
+		                    <td>
+								<select class="form-control" id="id" th:field="*{secondaryReaderUid}">									
+									<option value="0">---Select Secondary Reader---</option>
+									<option 
+									th:each="user,iterStat:${users}" 
+								 	th:value="${user.uid}" 
+								 	th:text="${user.lname} + ', ' + ${user.fname}"
+								 	th:if="${user.role} == 'secondaryreader'">
+									</option>
+								</select>	                    
+		                    </td>
+		 					<!-- -->
+		 					<td><button class="btn btn-primary" type="submit">Start</button></td>  
+		 				</tr>
+		            </tbody>
+		        </table>
+		        </form>
+		    </div>
+		</div>
 	</div>
+	
+	
+	<!-- Display Active Workflows -->
+	<div class="row mt-2">
+		<div class="col">
+		    <p></p>
+		    <p><strong>Active Workflows</strong></p>
+		    <div class="table-responsive">
+		        <table class="table">
+		           <thead>
+		               <tr>
+							<th>Workflow ID</th>			
+							<th>Primary Reader</th>
+							<th>Student</th>
+							<th>Secondary Reader</th>
+							<th>Workflow Status</th>
+							<th>Edit Workflow</th>
+							<th>Stop Workflow</th>
+		               </tr>
+		           </thead>
+		           <tbody>
+						<tr th:each = "activeWorkflow:${activeWorkflows}">
+							<td th:text = "${activeWorkflow.wid}">Wid</td>
+							<td th:text = "${activeWorkflow.primaryReaderFName} + ' ' + ${activeWorkflow.primaryReaderLName}">Primary Reader Name</td>
+							<td th:text = "${activeWorkflow.studentFName} + ' ' + ${activeWorkflow.studentLName}">Student Name</td>
+							<td th:text = "${activeWorkflow.secondaryReaderFName} + ' ' + ${activeWorkflow.secondaryReaderLName}">Secondary Reader Name</td>
+							<td th:text = ${activeWorkflow.workflowStatus}>Workflow Status</td>					
+							<td><a th:href="@{~/#}" class="btn btn-warning editButton">Edit</a></td>
+							<td><a th:href="@{~/#}" class="btn btn-danger deleteButton">Stop</a></td>
+						</tr>
+		           </tbody>
+		       </table>
+			</div>
+		</div>
+	</div>
+	
 </div>
+
 </body>
 </html>
