@@ -13,38 +13,43 @@
 <div th:insert="fragments.html :: topnav"></div>
 
 <div class="container">
-	<div class="col">
-	    <p></p>
-	    <p><strong>Users</strong></p>
-	    <div class="row">
-	        <div class="col"><button class="btn btn-primary" type="button">Add New User</button></div>
-	    </div>
-	    <div class="table-responsive">
-	        <table class="table">
-	            <thead>
-	                <tr>
-	                    <th>CCSU ID</th>
-	                    <th>First Name</th>
+	<div class="row">
+		<div class="col-md-12">
+			<h1> Users </h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>First Name</th>
 	                    <th>Last Name</th>
+	                    <th>CCSU ID</th>
 	                    <th>Role</th>
 	                    <th>Email</th>
 	                    <th>Status</th>
-	                    <th>Edit</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr>
-	                    <td>CCSU ID</td>
-	                    <td>First Name</td>
-	                    <td>Last Name</td>
-	                    <td>Role</td>
-	                    <td>Email</td>
-	                    <td>Status</td>
-	                    <td><button class="btn btn-primary" type="button">Edit</button></td>
-	                </tr>
-	            </tbody>
-	        </table>
-	    </div>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${users.empty}">
+						<td colspan="2"> No Users Available </td>
+					</tr>
+					<tr th:each="user : ${users}">
+						<td><span th:text="${user.fname}"> First Name </span></td>
+						<td><span th:text="${user.lname}"> Last Name </span></td>
+						<td><span th:text="${user.ccsuID}"> CCSU ID </span></td>
+						<td><span th:text="${mapRoles.get(user.role)}"> Role </span></td>
+						<td><span th:text="${user.email}"> E-mail </span></td>
+						<td><span th:text="${user.status}"> Status </span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<a class="btn btn-success" href="#" th:href="@{/user-management/create}"> Add User </a>
+			<a class="btn btn-primary" href="#" th:href="@{/user-management/edit}" th:classappend="${users.empty} ? 'disabled' : ''"> Edit Users </a>
+		</div>
 	</div>
 </div>
 </body>

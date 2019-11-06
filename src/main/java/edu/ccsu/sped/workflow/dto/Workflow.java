@@ -1,69 +1,47 @@
 package edu.ccsu.sped.workflow.dto;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="WorkflowDTO")
 public class Workflow {
 	
 	@Id
-	@GeneratedValue 
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer wid;
+	private String status = "NOT STARTED"; // initial workflow status
+	private Integer primaryReaderUid;
+	private Integer secondaryReaderUid;
+	private Integer studentUid;
+	private String portfolioURL;
 	
-	@OneToOne
-	private User student; 
-	@OneToOne
-	private User primaryreader; 
-	@OneToOne
-	private User secondaryreader; 
-	private String status; //workflow status
+	
+	@ManyToMany
+	@JsonManagedReference
+	private List<User> user = new LinkedList<User>(); // one workflow mapped to three users (student, primaryreader, secondaryreader)
 
+	// Constructors
 	public Workflow() {}
 	
-	public Workflow(Integer wid, User student, User primaryreader, User secondaryreader, String status) {
-		this.wid = wid;
-		this.student = student;
-		this.primaryreader = primaryreader;
-		this.secondaryreader = secondaryreader;
-		this.status = status;
-	}
-
+	// Getters and Setters
 	public Integer getWid() {
 		return wid;
 	}
 
 	public void setWid(Integer wid) {
 		this.wid = wid;
-	}
-
-	public User getstudent() {
-		return student;
-	}
-
-	public void setstudent(User student) {
-		this.student = student;
-	}
-
-	public User getprimaryreader() {
-		return primaryreader;
-	}
-
-	public void setprimaryreader(User primaryreader) {
-		this.primaryreader = primaryreader;
-	}
-
-	public User getsecondaryreader() {
-		return secondaryreader;
-	}
-
-	public void setsecondaryreader(User secondaryreader) {
-		this.secondaryreader = secondaryreader;
 	}
 
 	public String getStatus() {
@@ -74,6 +52,44 @@ public class Workflow {
 		this.status = status;
 	}
 
-	
+	public Integer getPrimaryReaderUid() {
+		return primaryReaderUid;
+	}
+
+	public void setPrimaryReaderUid(Integer primaryReaderUid) {
+		this.primaryReaderUid = primaryReaderUid;
+	}
+
+	public Integer getSecondaryReaderUid() {
+		return secondaryReaderUid;
+	}
+
+	public void setSecondaryReaderUid(Integer secondaryReaderUid) {
+		this.secondaryReaderUid = secondaryReaderUid;
+	}
+
+	public Integer getStudentUid() {
+		return studentUid;
+	}
+
+	public void setStudentUid(Integer studentUid) {
+		this.studentUid = studentUid;
+	}
+
+	public String getPortfolioURL() {
+		return portfolioURL;
+	}
+
+	public void setPortfolioURL(String portfolioURL) {
+		this.portfolioURL = portfolioURL;
+	}
+
+	public List<User> getUser() {
+		return user;
+	}
+
+	public void setUser(List<User> user) {
+		this.user = user;
+	}
 	
 }
