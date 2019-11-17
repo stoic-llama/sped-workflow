@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.ccsu.sped.workflow.dto.QuestionResponse;
 import edu.ccsu.sped.workflow.dto.QuestionsTemplate;
@@ -27,7 +28,7 @@ import edu.ccsu.sped.workflow.services.WorkflowCommentsService;
 import edu.ccsu.sped.workflow.services.WorkflowService;
 
 @Controller
-@RequestMapping(value = "/workflowdetail")
+@RequestMapping("/workflowdetail")
 
 public class WorkflowDetailController {
 	
@@ -44,8 +45,8 @@ public class WorkflowDetailController {
 	private WorkflowCommentsService workflowCommentsService;
 	
 
-	@GetMapping("{id}")
-	public String workflowDetail(@PathVariable(value = "id")Integer wid, @RequestBody Workflow workflow,Model model) {
+	@GetMapping(value = "{wid}")
+	public String workflowDetails(@PathVariable(value = "wid")Integer wid, @RequestBody Workflow workflow,Model model) {
 		List<QuestionResponse> questionResponses = new ArrayList<QuestionResponse>(workflow.getQuestionResponse());
 		
 		if(questionResponses.isEmpty()) {
@@ -63,7 +64,7 @@ public class WorkflowDetailController {
 			
 		model.addAttribute("questionResponses",questionResponses);
 		model.addAttribute("workflowComments",workflow.getWorkflowComments());
-		return "workflowDetail";
+		return "workflowdetail";
 	}
 /*
 	@GetMapping(value = "/create")

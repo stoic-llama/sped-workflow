@@ -39,7 +39,7 @@
 										<td th:text = "${activeWorkflow.studentFName} + ' ' + ${activeWorkflow.studentLName}">Student Name</td>
 										<td th:text = "${activeWorkflow.secondaryReaderFName} + ' ' + ${activeWorkflow.secondaryReaderLName}">Secondary Reader Name</td>
 										<td th:text = ${activeWorkflow.workflowStatus}>Workflow Status</td>					
-										<td><a th:href="@{/workflowdetail(id=${activeWorkflow.wid})}" class="btn btn-secondary detailsButton">Details</a></td>				
+										<td><a th:href="@{~/workflowdetail(id=${activeWorkflow.wid})}" th:object="${activeWorkflow}" class="btn btn-secondary detailsButton">Details</a></td>				
 										<td><a th:href="@{~/#}" class="btn btn-secondary editButton">Edit</a></td>
 									</tr>
 					           </tbody>
