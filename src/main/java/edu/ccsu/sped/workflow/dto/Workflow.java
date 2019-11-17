@@ -31,6 +31,10 @@ public class Workflow {
 	@ManyToMany
 	@JsonManagedReference
 	private List<User> user = new LinkedList<User>(); // one workflow mapped to three users (student, primaryreader, secondaryreader)
+	
+	@OneToMany(mappedBy="workflow")
+	@JsonManagedReference
+	private List<QuestionResponse> questionResponse = new LinkedList<QuestionResponse>(); // one workflow mapped to multiple question responses
 
 	// Constructors
 	public Workflow() {}
@@ -90,6 +94,14 @@ public class Workflow {
 
 	public void setUser(List<User> user) {
 		this.user = user;
+	}
+	
+	public List<QuestionResponse> getQuestionResponse() {
+		return questionResponse;
+	}
+	
+	public void setQuestionResponse(List<QuestionResponse> questionResponse) {
+		this.questionResponse = questionResponse;
 	}
 	
 }
