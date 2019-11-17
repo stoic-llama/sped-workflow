@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -17,21 +18,22 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name="QuestionsTemplate")
+@Table(name="QUESTIONSTEMPLATE")
 public class QuestionsTemplate {
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name = "qtid", nullable= false)
+	@Column(name = "QTID", nullable= false)
 	private Integer qtid;
 	
-	@Column(name = "display")
+	@Lob
+	@Column(name = "DISPLAY", length = 10000)
 	private String display; //Question to display
 	
-	@Column(name = "templateId")
+	@Column(name = "TEMPLATEID")
 	private int templateId; //version of template each question is active on
 	
-	@Column(name = "templateActive")
+	@Column(name = "TEMPLATEACTIVE")
 	private boolean templateActive; //Whether or not the template for the question is the active one
 	
 	@OneToMany(mappedBy="questionsTemplate") // mapped by questionsTemplate attribute in QuestionResponse object

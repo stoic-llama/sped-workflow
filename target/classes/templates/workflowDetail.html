@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="webjars/jquery/3.4.1/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
+	<meta charset="ISO-8859-1"/>
+	<title>SPED Workflow - Workflow Detail</title>
+</head>
+<body>
+
+<div th:insert="fragments.html :: topnav"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1> Workflow Detail </h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<table class="table">
+				<thead>
+					
+				</thead>
+				<tbody>
+					<tr th:each="templateQuestion : ${templateQuestions}">
+						<td><span th:text="${templateQuestion.display}"></span></td>
+					</tr>
+					<tr th:each="questionResponse : ${questionResponses}">
+						<td><span th:text="${.fname}"></span></td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<a class="btn btn-primary" href="#" th:href="@{~/#}"> Edit </a>
+		</div>
+	</div>
+</div>
+</body>
+</html>
