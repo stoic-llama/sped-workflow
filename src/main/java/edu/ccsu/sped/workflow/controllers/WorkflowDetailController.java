@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.ccsu.sped.workflow.dto.QuestionResponse;
+import edu.ccsu.sped.workflow.dto.QuestionResponseWrapper;
 import edu.ccsu.sped.workflow.dto.QuestionsTemplate;
 import edu.ccsu.sped.workflow.dto.User;
 import edu.ccsu.sped.workflow.dto.UserCreationDto;
 import edu.ccsu.sped.workflow.dto.Workflow;
+import edu.ccsu.sped.workflow.dto.WorkflowComments;
 import edu.ccsu.sped.workflow.services.QuestionResponseService;
 import edu.ccsu.sped.workflow.services.QuestionsTemplateService;
 import edu.ccsu.sped.workflow.services.UserService;
@@ -67,6 +69,7 @@ public class WorkflowDetailController {
 			
 		model.addAttribute("questionResponses",questionResponses);
 		model.addAttribute("workflowComments",activeWorkflow.getWorkflowComments());
+		model.addAttribute("activeWorkflow",activeWorkflow);
 		return "workflowdetail";
 	}
 /*
@@ -82,24 +85,32 @@ public class WorkflowDetailController {
 		return "createUsersForm";
 	}
 	
+*/
 	@GetMapping(value = "/edit")
-	public String showEditForm(Model model) {
-		List<User> users = new ArrayList<>();
-		userService.getUsers().iterator().forEachRemaining(users::add);
+	public String showEditForm(@ModelAttribute("questionResponses") ArrayList<QuestionResponse> questionResponses,@ModelAttribute("workflowComments") WorkflowComments workflowComments,@ModelAttribute("activeWorkflow") Workflow activeWorkflow, Model model) {
+
+		QuestionResponseWrapper formQuestionResponseWrapper = new QuestionResponseWrapper();
+		if(questionResponses.isEmpty()) {
+			List<QuestionsTemplate> questionTemplates = questionsTemplateService.getActiveQuestionsTemplates();
+			for(QuestionsTemplate questionTemplate : questionTemplates) {
+				formQuestionResponseWrapper.addQuestionResponse(new QuestionResponse(false, activeWorkflow, questionTemplate));
+			}
+		}
+		else {
+			formQuestionResponseWrapper = new QuestionResponseWrapper(questionResponses);
+		}
 		
-		model.addAttribute("form", new UserCreationDto(users));
-		model.addAttribute("mapRoles",mapRoles);
+		model.addAttribute("form", formQuestionResponseWrapper);
 		
-		return "editUsersForm";
+		return "editWorkflowDetailsForm";
 	}
 	
 	@PostMapping(value = "/save")
-	public String saveUsers(@ModelAttribute UserCreationDto form, Model model) {
-		userService.saveAll(form.getUsers());
+	public String saveUsers(@ModelAttribute("form") QuestionResponseWrapper form,  Model model) {
+		questionResponseService.saveAll(form.getQuestionResponses());
 		
-		model.addAttribute("users", userService.getUsers());
+		//model.addAttribute("questionResponses", questionResponseService.getQuestionResponses());
 		
-		return "redirect:/user-management";
+		return "redirect:/";
 	}
-*/
 }

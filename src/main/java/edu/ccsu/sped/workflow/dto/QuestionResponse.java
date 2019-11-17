@@ -59,6 +59,12 @@ public class QuestionResponse {
 		this.workflow = workflow;
 	}
 	
+	public QuestionResponse(Boolean response, Workflow workflow, QuestionsTemplate questionsTemplate) {
+		this.response = response;
+		this.workflow = workflow;
+		this.questionsTemplate = questionsTemplate;
+	}
+	
 	public Integer getQrid() {
 		return qrid;
 	}
