@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.ccsu.sped.workflow.dto.QuestionResponse;
 import edu.ccsu.sped.workflow.dto.QuestionsTemplate;
@@ -45,9 +47,10 @@ public class WorkflowDetailController {
 	private WorkflowCommentsService workflowCommentsService;
 	
 
-	@GetMapping(value = "{wid}")
-	public String workflowDetails(@PathVariable(value = "wid")Integer wid, @RequestBody Workflow workflow,Model model) {
-		List<QuestionResponse> questionResponses = new ArrayList<QuestionResponse>(workflow.getQuestionResponse());
+	@GetMapping("")
+	public String workflowDetails(@RequestParam(value = "wid")Integer wid,Model model) {
+		Workflow activeWorkflow = workflowService.getWorkflowById(wid).get();
+		List<QuestionResponse> questionResponses = new ArrayList<QuestionResponse>(activeWorkflow.getQuestionResponse());
 		
 		if(questionResponses.isEmpty()) {
 			model.addAttribute("templateQuestions",questionsTemplateService.getActiveQuestionsTemplates());
@@ -63,7 +66,7 @@ public class WorkflowDetailController {
 		}
 			
 		model.addAttribute("questionResponses",questionResponses);
-		model.addAttribute("workflowComments",workflow.getWorkflowComments());
+		model.addAttribute("workflowComments",activeWorkflow.getWorkflowComments());
 		return "workflowdetail";
 	}
 /*
