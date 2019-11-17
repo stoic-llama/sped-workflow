@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,8 +37,8 @@ public class QuestionsTemplate {
 	@Column(name = "TEMPLATEACTIVE")
 	private boolean templateActive; //Whether or not the template for the question is the active one
 	
-	@OneToMany(mappedBy="questionsTemplate") // mapped by questionsTemplate attribute in QuestionResponse object
-	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="questionsTemplate") // mapped by questionsTemplate attribute in QuestionResponse object
+	//@JsonBackReference
 	private List<QuestionResponse> questionResponse; 
 	
 	// Constructor

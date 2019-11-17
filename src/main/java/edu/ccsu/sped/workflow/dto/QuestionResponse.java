@@ -34,14 +34,14 @@ public class QuestionResponse {
 	private Boolean response; //Yes or no on grade
 	
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_workflow")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "wid")
 	@JsonBackReference
 	private Workflow workflow; 
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_questionsTemplate")
-	@JsonManagedReference
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "questionsTemplate_qtid")
+	@JsonBackReference
 	private QuestionsTemplate questionsTemplate; // one question response mapped to one question template
 
 	

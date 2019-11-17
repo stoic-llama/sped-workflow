@@ -3,7 +3,9 @@ package edu.ccsu.sped.workflow.dto;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +35,7 @@ public class Workflow {
 	@JsonManagedReference
 	private List<User> user = new LinkedList<User>(); // one workflow mapped to three users (student, primaryreader, secondaryreader)
 	
-	@OneToMany(mappedBy="workflow")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="workflow")
 	@JsonManagedReference
 	private List<QuestionResponse> questionResponse = new LinkedList<QuestionResponse>(); // one workflow mapped to multiple question responses
 	

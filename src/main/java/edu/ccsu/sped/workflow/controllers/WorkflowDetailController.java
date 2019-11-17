@@ -100,6 +100,9 @@ public class WorkflowDetailController {
 			formQuestionResponseWrapper = new QuestionResponseWrapper(questionResponses);
 		}
 		
+		model.addAttribute("questionResponses", questionResponses);
+		model.addAttribute("activeWorkflow",activeWorkflow);
+		model.addAttribute("workflowComments", workflowComments);
 		model.addAttribute("form", formQuestionResponseWrapper);
 		
 		return "editWorkflowDetailsForm";
