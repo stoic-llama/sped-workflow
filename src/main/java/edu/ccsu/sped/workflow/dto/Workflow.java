@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -35,6 +36,10 @@ public class Workflow {
 	@OneToMany(mappedBy="workflow")
 	@JsonManagedReference
 	private List<QuestionResponse> questionResponse = new LinkedList<QuestionResponse>(); // one workflow mapped to multiple question responses
+	
+	@OneToOne(mappedBy="workflow")
+	@JsonManagedReference
+	private WorkflowComments workflowComments;
 
 	// Constructors
 	public Workflow() {}
@@ -102,6 +107,14 @@ public class Workflow {
 	
 	public void setQuestionResponse(List<QuestionResponse> questionResponse) {
 		this.questionResponse = questionResponse;
+	}
+	
+	public WorkflowComments getWorkflowComments() {
+		return workflowComments;
+	}
+	
+	public void setWorkflowComments(WorkflowComments workflowComments) {
+		this.workflowComments = workflowComments;
 	}
 	
 }
