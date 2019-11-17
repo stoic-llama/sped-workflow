@@ -14,29 +14,52 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-10">
 			<h1> Workflow Detail </h1>
+		</div>
+		<div class="col-md-2">
+			<a class="btn btn-primary" href="#" th:href="@{~/#}"> Edit </a>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th width="80%">Component</th>
+	                    <th width="20%">Result</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="templateQuestion : ${templateQuestions}">
+						<td><span th:text="${templateQuestion.display}"></span></td>
+						<td><span th:text="${questionResponse!=null} ? ${questionResponse.response} : 'Not Yet Graded'"></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1> Comments </h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
 			<table class="table">
 				<thead>
 					
 				</thead>
 				<tbody>
-					<tr th:each="templateQuestion : ${templateQuestions}">
-						<td><span th:text="${templateQuestion.display}"></span></td>
-					</tr>
-					<tr th:each="questionResponse : ${questionResponses}">
-						<td><span th:text="${questionResponse.response}"></span></td>
-
+					<tr>
+						<td><span th:text="${workflowComments!=null} ? ${workflowComments} : 'Not Yet Graded'"></span></td>
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<div class="col-md-6">
-			<a class="btn btn-primary" href="#" th:href="@{~/#}"> Edit </a>
 		</div>
 	</div>
 </div>
