@@ -72,20 +72,7 @@ public class WorkflowDetailController {
 		model.addAttribute("activeWorkflow",activeWorkflow);
 		return "workflowdetail";
 	}
-/*
-	@GetMapping(value = "/create")
-	public String showCreateForm(Model model) {
-		UserCreationDto usersForm = new UserCreationDto();
-		
-		usersForm.addUser(new User());
-		
-		model.addAttribute("form",usersForm);
-		model.addAttribute("mapRoles",mapRoles);
-		
-		return "createUsersForm";
-	}
-	
-*/
+
 	@GetMapping(value = "/edit")
 	public String showEditForm(@ModelAttribute("questionResponses") ArrayList<QuestionResponse> questionResponses,@ModelAttribute("workflowComments") WorkflowComments workflowComments,@ModelAttribute("activeWorkflow") Workflow activeWorkflow, Model model) {
 
@@ -109,11 +96,17 @@ public class WorkflowDetailController {
 	}
 	
 	@PostMapping(value = "/save")
-	public String saveUsers(@ModelAttribute("form") QuestionResponseWrapper form,  Model model) {
+	public String saveQuestionResponses(@ModelAttribute("form") QuestionResponseWrapper form, Model model) {
 		questionResponseService.saveAll(form.getQuestionResponses());
 		
-		//model.addAttribute("questionResponses", questionResponseService.getQuestionResponses());
+		return "redirect:/workflowdetail/edit";
+	}
+	
+	@PostMapping(value = "/saveComments")
+	public String saveComments(@ModelAttribute("workflowComments") WorkflowComments workflowComments,  Model model) {
+		System.out.println(workflowComments.getComments());
+		workflowCommentsService.updateWorkflowComments(workflowComments);
 		
-		return "redirect:/";
+		return "redirect:/workflowdetail/edit";
 	}
 }

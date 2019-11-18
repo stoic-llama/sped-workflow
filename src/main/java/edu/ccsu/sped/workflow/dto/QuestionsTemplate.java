@@ -38,7 +38,7 @@ public class QuestionsTemplate {
 	private boolean templateActive; //Whether or not the template for the question is the active one
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="questionsTemplate") // mapped by questionsTemplate attribute in QuestionResponse object
-	//@JsonBackReference
+	@JsonBackReference
 	private List<QuestionResponse> questionResponse; 
 	
 	// Constructor
