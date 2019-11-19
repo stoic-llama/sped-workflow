@@ -35,12 +35,12 @@ public class QuestionResponse {
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "wid")
+	@JoinColumn(name = "workflow_wid")
 	@JsonBackReference
 	private Workflow workflow; 
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "qtid")
+	@JoinColumn(name = "questionsTemplate_qtid")
 	@JsonBackReference
 	private QuestionsTemplate questionsTemplate; // one question response mapped to one question template
 

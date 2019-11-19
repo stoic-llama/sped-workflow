@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import edu.ccsu.sped.workflow.dto.QuestionResponse;
 import edu.ccsu.sped.workflow.dto.QuestionResponseWrapper;
@@ -32,6 +33,7 @@ import edu.ccsu.sped.workflow.services.WorkflowCommentsService;
 import edu.ccsu.sped.workflow.services.WorkflowService;
 
 @Controller
+@SessionAttributes("activeWorkflow")
 @RequestMapping("/workflowdetail")
 
 public class WorkflowDetailController {
@@ -48,10 +50,14 @@ public class WorkflowDetailController {
 	@Autowired
 	private WorkflowCommentsService workflowCommentsService;
 	
-
+	@ModelAttribute("activeWorkflow")
+	public Workflow initWorkflow(@RequestParam(value = "wid")Integer wid) {
+		return workflowService.getWorkflowById(wid).get();
+	}
+	
 	@GetMapping("")
-	public String workflowDetails(@RequestParam(value = "wid")Integer wid,Model model) {
-		Workflow activeWorkflow = workflowService.getWorkflowById(wid).get();
+	public String workflowDetails(@ModelAttribute ("activeWorkflow") Workflow activeWorkflow,Model model) {
+		//Workflow activeWorkflow = workflowService.getWorkflowById(wid).get();
 		List<QuestionResponse> questionResponses = new ArrayList<QuestionResponse>(activeWorkflow.getQuestionResponse());
 		
 		if(questionResponses.isEmpty()) {
@@ -80,15 +86,23 @@ public class WorkflowDetailController {
 		if(questionResponses.isEmpty()) {
 			List<QuestionsTemplate> questionTemplates = questionsTemplateService.getActiveQuestionsTemplates();
 			for(QuestionsTemplate questionTemplate : questionTemplates) {
-				formQuestionResponseWrapper.addQuestionResponse(new QuestionResponse(false, activeWorkflow, questionTemplate));
+				QuestionResponse currentQuestionResponse = new QuestionResponse(false, activeWorkflow, questionTemplate);
+				//formQuestionResponseWrapper.addQuestionResponse(currentQuestionResponse);
+				activeWorkflow.getQuestionResponse().add(currentQuestionResponse);
+				//
+				System.out.println(activeWorkflow.getWid());
+				System.out.println(questionTemplate.getDisplay());
+				//
 			}
+			formQuestionResponseWrapper.setQuestionResponses(activeWorkflow.getQuestionResponse());
+			System.out.println(activeWorkflow.getQuestionResponse());
 		}
 		else {
 			formQuestionResponseWrapper = new QuestionResponseWrapper(questionResponses);
 		}
 		
 		model.addAttribute("questionResponses", questionResponses);
-		model.addAttribute("activeWorkflow",activeWorkflow);
+		//model.addAttribute("activeWorkflow",activeWorkflow);
 		model.addAttribute("workflowComments", workflowComments);
 		model.addAttribute("form", formQuestionResponseWrapper);
 		
@@ -96,7 +110,9 @@ public class WorkflowDetailController {
 	}
 	
 	@PostMapping(value = "/save")
-	public String saveQuestionResponses(@ModelAttribute("form") QuestionResponseWrapper form, Model model) {
+	public String saveQuestionResponses(@ModelAttribute("form") QuestionResponseWrapper form,@ModelAttribute("activeWorkflow") Workflow activeWorkflow, Model model) {
+		
+		workflowService.updateWorkflow(activeWorkflow);
 		questionResponseService.saveAll(form.getQuestionResponses());
 		
 		return "redirect:/workflowdetail/edit";
@@ -104,7 +120,9 @@ public class WorkflowDetailController {
 	
 	@PostMapping(value = "/saveComments")
 	public String saveComments(@ModelAttribute("workflowComments") WorkflowComments workflowComments,  Model model) {
+		//
 		System.out.println(workflowComments.getComments());
+		//
 		workflowCommentsService.updateWorkflowComments(workflowComments);
 		
 		return "redirect:/workflowdetail/edit";
