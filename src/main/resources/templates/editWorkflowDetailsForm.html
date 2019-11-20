@@ -41,14 +41,16 @@
 						<tr th:each="questionResponse, itemStat : ${activeWorkflow.questionResponse}">
 							<td><input hidden th:name="|questionResponse[${itemStat.index}].qrid|" th:value="${questionResponse.getQrid()}"/></td>
 							<td><span th:text="${questionResponse.getQuestionsTemplate().getDisplay()}"></span></td>
-							 <td><input th:name="|questionResponse[${itemStat.index}].response|" th:value="${questionResponse.getResponse()}" required/></td>
-							 
 							<!-- 
-							<td><select th:name="|questionResponse[${itemStat.index}].response|">
-								<option th:value="1" th:text="Yes" th:selected="${questionResponse.getResponse()=='1'} ? true : false"></option>
-								<option th:value="0" th:text="No" th:selected="${questionResponse.getResponse()=='0'} ? true : false"></option> 
-							</select>
+							<td><input th:name="|questionResponse[${itemStat.index}].response|" th:value="${questionResponse.getResponse()}" required/></td>
 							 -->
+							 
+							<td><select th:name="|questionResponse[${itemStat.index}].response|">
+								<option th:value="1" th:text="Yes" th:selected="${questionResponse.getResponse()==true} ? true : false"></option>
+								<option th:value="0" th:text="No" th:selected="${questionResponse.getResponse()==false} ? true : false"></option> 
+							</select>
+							</td>
+							 
 						</tr>
 						</tbody>
 						<thead>

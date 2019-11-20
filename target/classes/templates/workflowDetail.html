@@ -33,8 +33,12 @@
 				<tbody>
 					<tr th:each="templateQuestion,itemStat : ${templateQuestions}">
 						<td><span th:text="${templateQuestions[itemStat.index].display}"></span></td>
-						<td><span th:text="${!questionResponses.empty} ? ${questionResponses[itemStat.index].response} : 'Not Yet Graded'"></span>
-						</td>
+						 <td><span th:switch="${!questionResponses.empty} ? ${questionResponses[itemStat.index].response} : 'Not Yet Graded'">
+						 	<p th:case=true>Yes</p>
+						 	<p th:case=false>No</p>
+						 	<p th:case="*">Not Yet Graded</p>
+						 </span>
+						 </td>
 					</tr>
 				</tbody>
 			</table>
