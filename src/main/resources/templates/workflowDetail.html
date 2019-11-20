@@ -31,13 +31,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!-- 
-					<tr th:each="templateQuestion : ${templateQuestions}">
-						<td><span th:text="${templateQuestion.display}"></span></td>
-						<td><span th:text="${questionResponse.response!=null} ? ${questionResponse.response} : 'Not Yet Graded'"></span>
-						</td>
-					</tr>
-					 -->
 					<tr th:each="templateQuestion,itemStat : ${templateQuestions}">
 						<td><span th:text="${templateQuestions[itemStat.index].display}"></span></td>
 						<td><span th:text="${!questionResponses.empty} ? ${questionResponses[itemStat.index].response} : 'Not Yet Graded'"></span>
@@ -63,10 +56,8 @@
 				</thead>
 				<tbody>
 					<tr th:each="workflowComments,itemStat : ${activeWorkflow.getWorkflowComments()}">
-						<!--  <td><span th:text="${workflowComments!=null} ? ${workflowComments} : 'Not Yet Graded'"></span></td>
-						-->
 						<!-- Insert whether primary reader, secondary reader, or final here by whatever attribute that is -->
-						<td><span th:text="${workflowComments[itemStat.index].comments}"></span></td>
+						<td><span th:text="${workflowComments.comments}"></span></td>
 					</tr>
 				</tbody>
 			</table>

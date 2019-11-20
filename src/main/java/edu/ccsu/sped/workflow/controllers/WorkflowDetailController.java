@@ -82,11 +82,12 @@ public class WorkflowDetailController {
 
 		}
 		
+		
 		if(activeWorkflow.getWorkflowComments().isEmpty()) {
 			WorkflowComments tempComment = new WorkflowComments("",activeWorkflow);
 			activeWorkflow.getWorkflowComments().add(tempComment);
 		}
-			
+		
 		model.addAttribute("questionResponses",questionResponses);
 		
 		return "workflowdetail";
@@ -102,8 +103,11 @@ public class WorkflowDetailController {
 				QuestionResponse currentQuestionResponse = new QuestionResponse(false, activeWorkflow, questionTemplate);
 				activeWorkflow.getQuestionResponse().add(currentQuestionResponse);
 			}
+			
+			//Add these back in if removing the second if statement from above method
 			//WorkflowComments tempComment = new WorkflowComments("",activeWorkflow);
 			//activeWorkflow.getWorkflowComments().add(tempComment);
+			
 		}
 		else {
 
@@ -116,7 +120,7 @@ public class WorkflowDetailController {
 	
 	@PostMapping(value = "/save")
 	public String saveQuestionResponses(@ModelAttribute("activeWorkflow") Workflow activeWorkflow, Model model) {
-		//System.out.println(activeWorkflow.getWorkflowComments().getComments());
+
 		workflowService.updateWorkflow(activeWorkflow);
 		
 		return "redirect:/workflowdetail/edit";
