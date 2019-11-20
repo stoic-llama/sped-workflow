@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import edu.ccsu.sped.workflow.dto.QuestionResponse;
-import edu.ccsu.sped.workflow.dto.QuestionResponseWrapper;
 import edu.ccsu.sped.workflow.dto.QuestionsTemplate;
 import edu.ccsu.sped.workflow.dto.User;
 import edu.ccsu.sped.workflow.dto.UserCreationDto;
@@ -50,17 +49,13 @@ public class WorkflowDetailController {
 	@Autowired
 	private WorkflowCommentsService workflowCommentsService;
 	
-	
-	//This allows each below method to maintain the same activeWorkflow as a ModelAttribute through session
-	@ModelAttribute("activeWorkflow")
-	public Workflow initWorkflow(@RequestParam(value = "wid")Integer wid) {
-		return workflowService.getWorkflowById(wid).get();
-	}
-	
-	
 	//The details landing page
 	@GetMapping("")
-	public String workflowDetails(@ModelAttribute ("activeWorkflow") Workflow activeWorkflow,Model model) {
+	//public String workflowDetails(@ModelAttribute ("activeWorkflow") Workflow activeWorkflow,Model model) {
+	public String workflowDetails(@RequestParam(value = "wid")Integer wid, Model model) {
+		
+		Workflow activeWorkflow = workflowService.getWorkflowById(wid).get();
+		model.addAttribute("activeWorkflow", activeWorkflow);
 		
 		//Get responses that are currently associated with activeWorkflow
 		List<QuestionResponse> questionResponses = new ArrayList<QuestionResponse>(activeWorkflow.getQuestionResponse());
@@ -123,7 +118,7 @@ public class WorkflowDetailController {
 
 		workflowService.updateWorkflow(activeWorkflow);
 		
-		return "redirect:/workflowdetail/edit";
+		return "redirect:/";
 	}
 	
 }
