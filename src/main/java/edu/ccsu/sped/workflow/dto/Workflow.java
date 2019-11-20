@@ -39,7 +39,7 @@ public class Workflow {
 	@JsonManagedReference
 	private List<QuestionResponse> questionResponse = new LinkedList<QuestionResponse>(); // one workflow mapped to multiple question responses
 	
-	@OneToOne(mappedBy="workflow")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="workflow")
 	@JsonManagedReference
 	private WorkflowComments workflowComments;
 

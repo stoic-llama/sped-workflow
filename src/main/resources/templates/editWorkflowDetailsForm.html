@@ -20,9 +20,9 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<form action="#" class="form-horizontal"
+			 <form action="#" class="form-horizontal"
 				  th:action="@{/workflowdetail/save}"
-				  th:object="${form}"
+				  th:object="${activeWorkflow}"
 				  method="post">
 				<fieldset>
 					<span class="pull-right">
@@ -38,15 +38,25 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr th:each="questionResponse, itemStat : ${form.questionResponses}">
-							<td><input hidden th:name="|questionResponses[${itemStat.index}].qrid|" th:value="${questionResponse.getQrid()}"/></td>
+						<tr th:each="questionResponse, itemStat : ${activeWorkflow.questionResponse}">
+							<td><input hidden th:name="|questionResponse[${itemStat.index}].qrid|" th:value="${questionResponse.getQrid()}"/></td>
 							<td><span th:text="${questionResponse.getQuestionsTemplate().getDisplay()}"></span></td>
-							<td><input th:name="|questionResponses[${itemStat.index}].response|" th:value="${questionResponse.getResponse()}" required/></td>
+							<td><input th:name="|questionResponse[${itemStat.index}].response|" th:value="${questionResponse.getResponse()}" required/></td>
 						</tr>
+						</tbody>
+						<thead>
+						<tr>
+							<th></th>
+							<th width=100%>Comments</th>
+						</tr>
+						</thead>
+						<tbody>
+							<td><input th:name="|activeWorkflow.workflowComments.comments|" th:value="${activeWorkflow.getWorkflowComments().getComments()}"/></td>
 						</tbody>
 					</table>
 				</fieldset>
 			</form>
+			 <!--
 			<form action="#" class="form-horizontal"
 				  th:action="@{/workflowdetail/saveComments}"
 				  th:object="${workflowComments}"
@@ -68,7 +78,7 @@
 					</table>
 				</fieldset>
 			</form>
-			
+			  -->
 		</div>
 	</div>
 </div>

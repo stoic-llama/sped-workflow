@@ -36,7 +36,7 @@ public class WorkflowComments {
 	private String comments;
 	
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_workflow")
 	@JsonBackReference
 	private Workflow workflow; 
@@ -51,6 +51,11 @@ public class WorkflowComments {
 
 	public WorkflowComments(Integer wcid, String comments, Workflow workflow) {
 		this.wcid = wcid;
+		this.comments = comments;
+		this.workflow = workflow;
+	}
+	
+	public WorkflowComments(String comments, Workflow workflow) {
 		this.comments = comments;
 		this.workflow = workflow;
 	}

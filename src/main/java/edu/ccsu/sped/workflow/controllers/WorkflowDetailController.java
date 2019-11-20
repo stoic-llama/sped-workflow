@@ -50,81 +50,82 @@ public class WorkflowDetailController {
 	@Autowired
 	private WorkflowCommentsService workflowCommentsService;
 	
+	
+	//This allows each below method to maintain the same activeWorkflow as a ModelAttribute through session
 	@ModelAttribute("activeWorkflow")
 	public Workflow initWorkflow(@RequestParam(value = "wid")Integer wid) {
 		return workflowService.getWorkflowById(wid).get();
 	}
 	
+	
+	//The details landing page
 	@GetMapping("")
 	public String workflowDetails(@ModelAttribute ("activeWorkflow") Workflow activeWorkflow,Model model) {
-		//Workflow activeWorkflow = workflowService.getWorkflowById(wid).get();
+		
+		//Get responses that are currently associated with activeWorkflow
 		List<QuestionResponse> questionResponses = new ArrayList<QuestionResponse>(activeWorkflow.getQuestionResponse());
 		
+		//If there are no responses associated with activeWorkflow get the questions from the question template that are active
 		if(questionResponses.isEmpty()) {
 			model.addAttribute("templateQuestions",questionsTemplateService.getActiveQuestionsTemplates());
 		}
+		
+		//If there are responses, then get the template question associated with each for display(template questions may not be active anymore)
 		else {
-			model.addAttribute("questionResponses",questionResponses);
+
 			List<QuestionsTemplate> questionTemplates = new ArrayList<QuestionsTemplate>();
 			for(QuestionResponse questionResponse : questionResponses) {
 				questionTemplates.add(questionResponse.getQuestionsTemplate());
 			}
 				
 			model.addAttribute("templateQuestions",questionTemplates);
+
 		}
 			
 		model.addAttribute("questionResponses",questionResponses);
-		model.addAttribute("workflowComments",activeWorkflow.getWorkflowComments());
-		model.addAttribute("activeWorkflow",activeWorkflow);
+		//model.addAttribute("workflowComments",activeWorkflow.getWorkflowComments());
 		return "workflowdetail";
 	}
 
+	
 	@GetMapping(value = "/edit")
-	public String showEditForm(@ModelAttribute("questionResponses") ArrayList<QuestionResponse> questionResponses,@ModelAttribute("workflowComments") WorkflowComments workflowComments,@ModelAttribute("activeWorkflow") Workflow activeWorkflow, Model model) {
+	public String showEditForm(@ModelAttribute("activeWorkflow") Workflow activeWorkflow, Model model) {
 
-		QuestionResponseWrapper formQuestionResponseWrapper = new QuestionResponseWrapper();
-		if(questionResponses.isEmpty()) {
+		if(activeWorkflow.getQuestionResponse().isEmpty()) {
 			List<QuestionsTemplate> questionTemplates = questionsTemplateService.getActiveQuestionsTemplates();
 			for(QuestionsTemplate questionTemplate : questionTemplates) {
 				QuestionResponse currentQuestionResponse = new QuestionResponse(false, activeWorkflow, questionTemplate);
-				//formQuestionResponseWrapper.addQuestionResponse(currentQuestionResponse);
 				activeWorkflow.getQuestionResponse().add(currentQuestionResponse);
-				//
-				System.out.println(activeWorkflow.getWid());
-				System.out.println(questionTemplate.getDisplay());
-				//
 			}
-			formQuestionResponseWrapper.setQuestionResponses(activeWorkflow.getQuestionResponse());
-			System.out.println(activeWorkflow.getQuestionResponse());
+			activeWorkflow.setWorkflowComments(new WorkflowComments("",activeWorkflow));
 		}
 		else {
-			formQuestionResponseWrapper = new QuestionResponseWrapper(questionResponses);
+
 		}
 		
-		model.addAttribute("questionResponses", questionResponses);
-		//model.addAttribute("activeWorkflow",activeWorkflow);
-		model.addAttribute("workflowComments", workflowComments);
-		model.addAttribute("form", formQuestionResponseWrapper);
+		//model.addAttribute("workflowComments", workflowComments);
 		
 		return "editWorkflowDetailsForm";
 	}
 	
+	
+	
 	@PostMapping(value = "/save")
-	public String saveQuestionResponses(@ModelAttribute("form") QuestionResponseWrapper form,@ModelAttribute("activeWorkflow") Workflow activeWorkflow, Model model) {
-		
+	public String saveQuestionResponses(@ModelAttribute("activeWorkflow") Workflow activeWorkflow, Model model) {
+		System.out.println(activeWorkflow.getWorkflowComments().getComments());
 		workflowService.updateWorkflow(activeWorkflow);
-		questionResponseService.saveAll(form.getQuestionResponses());
 		
 		return "redirect:/workflowdetail/edit";
 	}
 	
+	
+	/*
 	@PostMapping(value = "/saveComments")
 	public String saveComments(@ModelAttribute("workflowComments") WorkflowComments workflowComments,  Model model) {
-		//
-		System.out.println(workflowComments.getComments());
-		//
+
 		workflowCommentsService.updateWorkflowComments(workflowComments);
 		
 		return "redirect:/workflowdetail/edit";
 	}
+	*/
 }

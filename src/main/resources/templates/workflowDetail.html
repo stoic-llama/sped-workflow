@@ -31,9 +31,16 @@
 					</tr>
 				</thead>
 				<tbody>
+					<!-- 
 					<tr th:each="templateQuestion : ${templateQuestions}">
 						<td><span th:text="${templateQuestion.display}"></span></td>
-						<td><span th:text="${questionResponse!=null} ? ${questionResponse.response} : 'Not Yet Graded'"></span>
+						<td><span th:text="${questionResponse.response!=null} ? ${questionResponse.response} : 'Not Yet Graded'"></span>
+						</td>
+					</tr>
+					 -->
+					<tr th:each="templateQuestion,itemStat : ${templateQuestions}">
+						<td><span th:text="${templateQuestions[itemStat.index].display}"></span></td>
+						<td><span th:text="${!questionResponses.empty} ? ${questionResponses[itemStat.index].response} : 'Not Yet Graded'"><</span>
 						</td>
 					</tr>
 				</tbody>
