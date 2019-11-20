@@ -47,11 +47,13 @@
 						<thead>
 						<tr>
 							<th></th>
-							<th width=100%>Comments</th>
+							<th>Comments</th>
 						</tr>
 						</thead>
 						<tbody>
-							<td><input th:name="|activeWorkflow.workflowComments.comments|" th:value="${activeWorkflow.getWorkflowComments().getComments()}"/></td>
+								<tr th:each="workflowComments, itemStat : ${activeWorkflow.getWorkflowComments()}">
+									<td><input th:name="|workflowComments[${itemStat.index}].comments|" th:value="${workflowComments.getComments()}"/></td>
+								</tr>
 						</tbody>
 					</table>
 				</fieldset>

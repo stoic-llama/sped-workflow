@@ -81,9 +81,14 @@ public class WorkflowDetailController {
 			model.addAttribute("templateQuestions",questionTemplates);
 
 		}
+		
+		if(activeWorkflow.getWorkflowComments().isEmpty()) {
+			WorkflowComments tempComment = new WorkflowComments("",activeWorkflow);
+			activeWorkflow.getWorkflowComments().add(tempComment);
+		}
 			
 		model.addAttribute("questionResponses",questionResponses);
-		//model.addAttribute("workflowComments",activeWorkflow.getWorkflowComments());
+		
 		return "workflowdetail";
 	}
 
@@ -97,13 +102,12 @@ public class WorkflowDetailController {
 				QuestionResponse currentQuestionResponse = new QuestionResponse(false, activeWorkflow, questionTemplate);
 				activeWorkflow.getQuestionResponse().add(currentQuestionResponse);
 			}
-			activeWorkflow.setWorkflowComments(new WorkflowComments("",activeWorkflow));
+			//WorkflowComments tempComment = new WorkflowComments("",activeWorkflow);
+			//activeWorkflow.getWorkflowComments().add(tempComment);
 		}
 		else {
 
 		}
-		
-		//model.addAttribute("workflowComments", workflowComments);
 		
 		return "editWorkflowDetailsForm";
 	}
@@ -112,20 +116,10 @@ public class WorkflowDetailController {
 	
 	@PostMapping(value = "/save")
 	public String saveQuestionResponses(@ModelAttribute("activeWorkflow") Workflow activeWorkflow, Model model) {
-		System.out.println(activeWorkflow.getWorkflowComments().getComments());
+		//System.out.println(activeWorkflow.getWorkflowComments().getComments());
 		workflowService.updateWorkflow(activeWorkflow);
 		
 		return "redirect:/workflowdetail/edit";
 	}
 	
-	
-	/*
-	@PostMapping(value = "/saveComments")
-	public String saveComments(@ModelAttribute("workflowComments") WorkflowComments workflowComments,  Model model) {
-
-		workflowCommentsService.updateWorkflowComments(workflowComments);
-		
-		return "redirect:/workflowdetail/edit";
-	}
-	*/
 }

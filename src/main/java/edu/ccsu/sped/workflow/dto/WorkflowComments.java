@@ -36,8 +36,8 @@ public class WorkflowComments {
 	private String comments;
 	
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "fk_workflow")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "workflow_wid")
 	@JsonBackReference
 	private Workflow workflow; 
 

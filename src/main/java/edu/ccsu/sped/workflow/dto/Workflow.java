@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -36,12 +39,20 @@ public class Workflow {
 	private List<User> user = new LinkedList<User>(); // one workflow mapped to three users (student, primaryreader, secondaryreader)
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="workflow")
+	@Fetch(value = FetchMode.SUBSELECT)
 	@JsonManagedReference
 	private List<QuestionResponse> questionResponse = new LinkedList<QuestionResponse>(); // one workflow mapped to multiple question responses
 	
+	/*
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="workflow")
 	@JsonManagedReference
 	private WorkflowComments workflowComments;
+	*/
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="workflow")
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JsonManagedReference
+	private List<WorkflowComments> workflowComments = new LinkedList<WorkflowComments>(); // one workflow mapped to multiple comments
 
 	// Constructors
 	public Workflow() {}
@@ -111,11 +122,11 @@ public class Workflow {
 		this.questionResponse = questionResponse;
 	}
 	
-	public WorkflowComments getWorkflowComments() {
+	public List<WorkflowComments> getWorkflowComments() {
 		return workflowComments;
 	}
 	
-	public void setWorkflowComments(WorkflowComments workflowComments) {
+	public void setWorkflowComments(List<WorkflowComments> workflowComments) {
 		this.workflowComments = workflowComments;
 	}
 	
