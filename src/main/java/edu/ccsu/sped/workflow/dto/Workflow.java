@@ -3,14 +3,20 @@ package edu.ccsu.sped.workflow.dto;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -31,6 +37,16 @@ public class Workflow {
 	@ManyToMany
 	@JsonManagedReference
 	private List<User> user = new LinkedList<User>(); // one workflow mapped to three users (student, primaryreader, secondaryreader)
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="workflow")
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JsonManagedReference
+	private List<QuestionResponse> questionResponse = new LinkedList<QuestionResponse>(); // one workflow mapped to multiple question responses
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="workflow")
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JsonManagedReference
+	private List<WorkflowComments> workflowComments = new LinkedList<WorkflowComments>(); // one workflow mapped to multiple comments
 
 	// Constructors
 	public Workflow() {}
@@ -90,6 +106,22 @@ public class Workflow {
 
 	public void setUser(List<User> user) {
 		this.user = user;
+	}
+	
+	public List<QuestionResponse> getQuestionResponse() {
+		return questionResponse;
+	}
+	
+	public void setQuestionResponse(List<QuestionResponse> questionResponse) {
+		this.questionResponse = questionResponse;
+	}
+	
+	public List<WorkflowComments> getWorkflowComments() {
+		return workflowComments;
+	}
+	
+	public void setWorkflowComments(List<WorkflowComments> workflowComments) {
+		this.workflowComments = workflowComments;
 	}
 	
 }

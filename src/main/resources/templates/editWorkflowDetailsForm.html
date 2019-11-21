@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="webjars/jquery/3.4.1/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
+	<meta charset="ISO-8859-1"/>
+	<title>Edit Users</title>
+</head>
+<body>
+
+<div th:insert="fragments.html :: topnav"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1> Edit Workflow Details </h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			 <form action="#" class="form-horizontal"
+				  th:action="@{/workflowdetail/save}"
+				  th:object="${activeWorkflow}"
+				  method="post">
+				<fieldset>
+					<span class="pull-right">
+						    <input type="submit" id="submitButton" class="btn btn-success" th:value="Save">
+						    <input type="reset" id="resetButton" class="btn btn-danger" th:value="Reset"/>
+					</span>
+					<table class="table">
+						<thead>
+						<tr>
+							<th></th>
+							<th width=80%>Component</th>
+	                    	<th width=20%>Result</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="questionResponse, itemStat : ${activeWorkflow.questionResponse}">
+							<td><input hidden th:name="|questionResponse[${itemStat.index}].qrid|" th:value="${questionResponse.getQrid()}"/></td>
+							<td><span th:text="${questionResponse.getQuestionsTemplate().getDisplay()}"></span></td>
+							<!-- 
+							<td><input th:name="|questionResponse[${itemStat.index}].response|" th:value="${questionResponse.getResponse()}" required/></td>
+							 -->
+							 
+							<td><select th:name="|questionResponse[${itemStat.index}].response|">
+								<option th:value="1" th:text="Yes" th:selected="${questionResponse.getResponse()==true} ? true : false"></option>
+								<option th:value="0" th:text="No" th:selected="${questionResponse.getResponse()==false} ? true : false"></option> 
+							</select>
+							</td>
+							 
+						</tr>
+						</tbody>
+						<thead>
+						<tr>
+							<th></th>
+							<th>Comments</th>
+						</tr>
+						</thead>
+						<tbody>
+								<tr th:each="workflowComments, itemStat : ${activeWorkflow.getWorkflowComments()}">
+									<td><input th:name="|workflowComments[${itemStat.index}].comments|" th:value="${workflowComments.getComments()}"/></td>
+								</tr>
+						</tbody>
+					</table>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>
