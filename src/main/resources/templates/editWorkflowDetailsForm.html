@@ -33,8 +33,9 @@
 						<thead>
 						<tr>
 							<th></th>
-							<th width=80%>Component</th>
+							<th width=50%>Component</th>
 	                    	<th width=20%>Result</th>
+	                    	<th width=30%>Comments</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -50,6 +51,7 @@
 								<option th:value="0" th:text="No" th:selected="${questionResponse.getResponse()==false} ? true : false"></option> 
 							</select>
 							</td>
+							<td><input th:name="|questionResponse[${itemStat.index}].comments|" th:value="${questionResponse.getComments()}"/></td>
 							 
 						</tr>
 						</tbody>
