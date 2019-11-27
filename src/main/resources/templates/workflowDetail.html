@@ -26,8 +26,9 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th width="80%">Component</th>
+						<th width="50%">Component</th>
 	                    <th width="20%">Result</th>
+	                    <th width="30%">Comments</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -37,6 +38,9 @@
 						 	<p th:case=true>Yes</p>
 						 	<p th:case=false>No</p>
 						 	<p th:case="*">Not Yet Graded</p>
+						 </span>
+						 </td>
+						 <td><span th:text="${!questionResponses.empty} ? ${questionResponses[itemStat.index].comments} : ''">
 						 </span>
 						 </td>
 					</tr>

@@ -33,6 +33,9 @@ public class QuestionResponse {
 	@Column(name = "response")
 	private Boolean response; //Yes or no on grade
 	
+	@Column(name = "comments")
+	private String comments;
+	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "workflow_wid")
@@ -59,10 +62,11 @@ public class QuestionResponse {
 		this.workflow = workflow;
 	}
 	
-	public QuestionResponse(Boolean response, Workflow workflow, QuestionsTemplate questionsTemplate) {
+	public QuestionResponse(Boolean response, Workflow workflow, QuestionsTemplate questionsTemplate, String comments) {
 		this.response = response;
 		this.workflow = workflow;
 		this.questionsTemplate = questionsTemplate;
+		this.comments=comments;
 	}
 	
 	public Integer getQrid() {
@@ -79,6 +83,14 @@ public class QuestionResponse {
 
 	public void setResponse(Boolean response) {
 		this.response = response;
+	}
+	
+	public String getComments() {
+		return comments;
+	}
+	
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 	public Workflow getWorkflow() {
