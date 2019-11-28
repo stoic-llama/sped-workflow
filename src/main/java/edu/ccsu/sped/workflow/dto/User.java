@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name="UserDTO")
+@Table(name="Users")
 public class User {
 	
 	@Id
@@ -37,7 +37,7 @@ public class User {
 	private String role; 
 	
 	
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 	
 	@Column(name = "status")

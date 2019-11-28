@@ -118,7 +118,7 @@ public class WorkflowDetailController {
 
 		workflowService.updateWorkflow(activeWorkflow);
 		
-		return "redirect:/";
+		return "redirect:/index";
 	}
 	
 }
