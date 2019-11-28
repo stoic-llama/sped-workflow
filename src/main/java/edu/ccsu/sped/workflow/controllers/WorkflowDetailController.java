@@ -95,7 +95,7 @@ public class WorkflowDetailController {
 		if(activeWorkflow.getQuestionResponse().isEmpty()) {
 			List<QuestionsTemplate> questionTemplates = questionsTemplateService.getActiveQuestionsTemplates();
 			for(QuestionsTemplate questionTemplate : questionTemplates) {
-				QuestionResponse currentQuestionResponse = new QuestionResponse(false, activeWorkflow, questionTemplate);
+				QuestionResponse currentQuestionResponse = new QuestionResponse(true, activeWorkflow, questionTemplate, "");
 				activeWorkflow.getQuestionResponse().add(currentQuestionResponse);
 			}
 			
