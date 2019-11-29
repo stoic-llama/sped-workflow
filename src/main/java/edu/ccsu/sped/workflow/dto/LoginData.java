@@ -35,8 +35,11 @@ public class LoginData {
 	private Integer ldid;
 
 	@OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_uid")
+	@JoinColumn(name = "user_uid", referencedColumnName = "uid")
 	private User user;
+	
+	//@OneToOne (mappedBy = "loginData")
+	//private User user;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="loginData")
 	@Fetch(value = FetchMode.SUBSELECT)
@@ -58,11 +61,11 @@ public class LoginData {
 		this.user = user;
 	}
 	
-	public int getLdid( ) {
+	public Integer getLdid( ) {
 		return ldid;
 	}
 	
-	public void setLdid(int ldid) {
+	public void setLdid(Integer ldid) {
 		this.ldid=ldid;
 	}
 	
@@ -76,6 +79,10 @@ public class LoginData {
 	
 	public String getPassword() {
 		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	public boolean isEnabled() {

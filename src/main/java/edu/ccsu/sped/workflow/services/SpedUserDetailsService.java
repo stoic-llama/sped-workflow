@@ -36,7 +36,7 @@ public class SpedUserDetailsService implements UserDetailsService {
  
     @Override
     public UserDetails loadUserByUsername(final String username) {
-        final User user = userRepository.findByEmail(username);
+        final User user = userRepository.findUserByEmail(username);
         /*
         if (user == null) {
             throw new UsernameNotFoundException(username);

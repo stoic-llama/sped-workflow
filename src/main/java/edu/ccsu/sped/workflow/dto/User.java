@@ -5,9 +5,11 @@ import javax.persistence.Column;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -49,6 +51,10 @@ public class User {
 	
 	@OneToOne(mappedBy = "user")
 	private LoginData loginData;
+	
+	//@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	//@JoinColumn(name = "logindata_ldid", referencedColumnName = "ldid")
+	//private LoginData loginData;
 	
 	// Constructor
 	public User() {}

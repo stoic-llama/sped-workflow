@@ -41,17 +41,22 @@ public class UserAuthorities {
 	
 	private UserAuthorities() {}
 	
+	public UserAuthorities(String username, String authority) {
+		this.username = username;
+		this.authority = authority;
+	}
+	
 	public UserAuthorities(String username, String authority, LoginData loginData) {
 		this.username = username;
 		this.authority = authority;
 		this.loginData = loginData;
 	}
 	
-	public int getUaid( ) {
+	public Integer getUaid( ) {
 		return uaid;
 	}
 	
-	public void setUaid(int uaid) {
+	public void setUaid(Integer uaid) {
 		this.uaid=uaid;
 	}
 	

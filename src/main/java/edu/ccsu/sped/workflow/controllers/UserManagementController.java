@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.ccsu.sped.workflow.dto.LoginData;
 import edu.ccsu.sped.workflow.dto.User;
+import edu.ccsu.sped.workflow.dto.UserAuthorities;
 import edu.ccsu.sped.workflow.dto.UserCreationDto;
+import edu.ccsu.sped.workflow.services.LoginDataService;
+import edu.ccsu.sped.workflow.services.UserAuthoritiesService;
 import edu.ccsu.sped.workflow.services.UserService;
 
 @Controller
@@ -24,6 +29,15 @@ public class UserManagementController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private LoginDataService loginDataService;
+	
+	@Autowired
+	private UserAuthoritiesService userAuthoritiesService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	private Map<String, String> mapRoles = Map.of(
 		"reader", "Reader",
@@ -64,8 +78,43 @@ public class UserManagementController {
 	
 	@PostMapping(value = "/save")
 	public String saveUsers(@ModelAttribute UserCreationDto form, Model model) {
+		
+		List<User> allUsers= new ArrayList<>(form.getUsers());
+		
+		
+		
+		for (User user : allUsers) {
+			user.getLoginData().setUsername(user.getEmail());
+			user.getLoginData().setPassword(passwordEncoder.encode(Integer.toString(user.getCcsuID())));
+			//loginDataService.updateLoginData(user.getLoginData());
+			user.getLoginData().getUserAuthorities().clear();
+			user.getLoginData().getUserAuthorities().get(0).setAuthority(user.getRole());
+			//userAuthoritiesService.saveAll(user.getLoginData().getUserAuthorities());
+		}
+		
+		userService.saveAll(allUsers);
+		
+		model.addAttribute("users", userService.getUsers());
+		
+		return "redirect:/user-management";
+	}
+	
+	@PostMapping(value = "/savenew")
+	public String saveNewUser(@ModelAttribute UserCreationDto form, Model model) {
 		userService.saveAll(form.getUsers());
 		
+		User newUser = form.getUsers().get(0);
+		
+		
+		
+		LoginData newUserLoginData = new LoginData(newUser.getEmail(),passwordEncoder.encode(Integer.toString(newUser.getCcsuID())),userService.getUserByEmail(newUser.getEmail()));
+		loginDataService.addLoginData(newUserLoginData);
+		
+		System.out.println(userService.getUserByEmail(newUser.getLoginData().getUsername()));
+		
+		UserAuthorities newUserAuthorities = new UserAuthorities(newUser.getEmail(),newUser.getRole(),userService.getUserByEmail(newUser.getEmail()).getLoginData());
+		userAuthoritiesService.addUserAuthorities(newUserAuthorities);
+
 		model.addAttribute("users", userService.getUsers());
 		
 		return "redirect:/user-management";

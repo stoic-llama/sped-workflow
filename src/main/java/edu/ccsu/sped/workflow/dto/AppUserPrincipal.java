@@ -25,7 +25,10 @@ public class AppUserPrincipal implements UserDetails {
     public String getUsername() {
         return user.getEmail();
     }
-
+    
+    //This may have to be changed if the user is allowed to change their password
+    //Also is this expecting to return an encrypted password?
+    
     @Override
     public String getPassword() {
         return Integer.toString(user.getCcsuID());
