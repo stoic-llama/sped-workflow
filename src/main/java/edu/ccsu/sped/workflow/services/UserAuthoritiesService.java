@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.ccsu.sped.workflow.dto.LoginData;
+import edu.ccsu.sped.workflow.dto.User;
 import edu.ccsu.sped.workflow.dto.UserAuthorities;
 import edu.ccsu.sped.workflow.repos.UserAuthoritiesRepository;
 
@@ -24,6 +26,10 @@ public class UserAuthoritiesService {
 	// GET single instance
 	public Optional<UserAuthorities> getUserAuthoritiesById(Integer Id) {
 		return userAuthoritiesRepository.findById(Id);
+	}
+	
+	public List<UserAuthorities> getUserAuthoritiesByLoginData(LoginData loginData) {
+		return userAuthoritiesRepository.findUserAuthoritiesByLoginData_Ldid(loginData.getLdid());
 	}
 	
 	// POST new instance

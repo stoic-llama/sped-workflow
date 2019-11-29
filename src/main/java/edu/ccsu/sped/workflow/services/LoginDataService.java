@@ -29,6 +29,10 @@ public class LoginDataService {
 		return loginDataRepository.findById(Id);
 	}
 	
+	public LoginData getLoginDataByUser(User user) {
+		return loginDataRepository.findLoginDataByUser_Uid(user.getUid());
+	}
+	
 	// POST new instance
 	public void addLoginData(LoginData loginData) {
 		loginDataRepository.save(loginData);
