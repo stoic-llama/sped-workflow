@@ -46,11 +46,16 @@ public class LoginData {
 	@JsonManagedReference
 	private List<UserAuthorities> userAuthorities = new LinkedList<UserAuthorities>();
 	
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, name = "username")
 	private String username;
 	
+	@Column(name = "password")
 	private String password;
+	
+	@Column(name = "enabled")
 	private boolean enabled = true;
+	
+	@Column(name = "last_login")
 	private Date lastLogin;
 	
 	private LoginData() {}

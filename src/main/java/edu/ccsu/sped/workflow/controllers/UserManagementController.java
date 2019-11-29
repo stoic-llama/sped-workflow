@@ -70,6 +70,9 @@ public class UserManagementController {
 		List<User> users = new ArrayList<>();
 		userService.getUsers().iterator().forEachRemaining(users::add);
 		
+		System.out.println(userService.getUserByEmail("christopher.smith@my.ccsu.edu").getLoginData().getUsername());		
+		System.out.println(userService.getUserByEmail("christopher.smithers@my.ccsu.edu").getLoginData().getUsername());
+		
 		model.addAttribute("form", new UserCreationDto(users));
 		model.addAttribute("mapRoles",mapRoles);
 		
@@ -80,8 +83,6 @@ public class UserManagementController {
 	public String saveUsers(@ModelAttribute UserCreationDto form, Model model) {
 		
 		List<User> allUsers= new ArrayList<>(form.getUsers());
-		
-		
 		
 		for (User user : allUsers) {
 			user.getLoginData().setUsername(user.getEmail());
@@ -103,16 +104,12 @@ public class UserManagementController {
 	public String saveNewUser(@ModelAttribute UserCreationDto form, Model model) {
 		userService.saveAll(form.getUsers());
 		
-		User newUser = form.getUsers().get(0);
-		
-		
-		
-		LoginData newUserLoginData = new LoginData(newUser.getEmail(),passwordEncoder.encode(Integer.toString(newUser.getCcsuID())),userService.getUserByEmail(newUser.getEmail()));
+		User newUser = userService.getUserByEmail(form.getUsers().get(0).getEmail());
+
+		LoginData newUserLoginData = new LoginData(newUser.getEmail(),passwordEncoder.encode(Integer.toString(newUser.getCcsuID())),newUser);
 		loginDataService.addLoginData(newUserLoginData);
-		
-		System.out.println(userService.getUserByEmail(newUser.getLoginData().getUsername()));
-		
-		UserAuthorities newUserAuthorities = new UserAuthorities(newUser.getEmail(),newUser.getRole(),userService.getUserByEmail(newUser.getEmail()).getLoginData());
+			
+		UserAuthorities newUserAuthorities = new UserAuthorities(newUser.getEmail(),newUser.getRole(),newUserLoginData);
 		userAuthoritiesService.addUserAuthorities(newUserAuthorities);
 
 		model.addAttribute("users", userService.getUsers());
