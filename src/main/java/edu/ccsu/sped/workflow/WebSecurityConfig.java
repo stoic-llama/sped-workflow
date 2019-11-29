@@ -59,6 +59,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
+    	http.csrf().disable();
+        http.headers().frameOptions().disable();
+    	
         http.authorizeRequests()
             .antMatchers("/login")
             .permitAll()
@@ -70,6 +73,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf()
             .disable();
     }
+   
+    
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    	auth.userDetailsService(userDetailsService);
+    }
+    
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {

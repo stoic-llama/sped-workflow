@@ -14,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import edu.ccsu.sped.workflow.dto.AppUserPrincipal;
 import edu.ccsu.sped.workflow.dto.User;
+import edu.ccsu.sped.workflow.repos.LoginDataRepository;
 import edu.ccsu.sped.workflow.repos.UserRepository;
 
 @Service
@@ -22,6 +23,7 @@ public class SpedUserDetailsService implements UserDetailsService {
     @Autowired
     private WebApplicationContext applicationContext;
     private UserRepository userRepository;
+    private LoginDataRepository loginDataRepository;
     
     public SpedUserDetailsService() {
     	super();
@@ -33,8 +35,8 @@ public class SpedUserDetailsService implements UserDetailsService {
     }
  
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByEmail(username);
+    public UserDetails loadUserByUsername(final String username) {
+        final User user = userRepository.findByEmail(username);
         /*
         if (user == null) {
             throw new UsernameNotFoundException(username);

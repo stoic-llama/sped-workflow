@@ -1,15 +1,19 @@
 
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (1, 'Jane.Doe@my.ccsu.edu', 'Jane', 'Doe', 80802580, 'reader', 'ACTIVE');
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (2, 'Johnny.Cash@my.ccsu.edu', 'Johnny', 'Cash', 80802581, 'reader', 'ACTIVE');
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (3, 'Owen.Wilson@my.ccsu.edu', 'Owen', 'Wilson', 80802582, 'reader', 'ACTIVE');
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (4, 'Will.Smith@my.ccsu.edu', 'Will', 'Smith', 80802583, 'reader', 'ACTIVE');
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (5, 'Raine.Dawson@my.ccsu.edu', 'Raine', 'Dawson', 80802584, 'reader', 'ACTIVE');
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (6, 'Jon.Snow@my.ccsu.edu', 'Jon', 'Snow', 80802585, 'reader', 'ACTIVE');
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (7, 'Roger.Williams@my.ccsu.edu', 'Roger', 'Williams', 80802586, 'student', 'ACTIVE');
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (8, 'Jim.Carrey@my.ccsu.edu', 'Jim', 'Carrey', 80802571, 'student', 'ACTIVE');
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (9, 'Mickey.Mouse@my.ccsu.edu', 'Mickey', 'Mouse', 80802572, 'student', 'INACTIVE');
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (10, 'Minnie.Mouse@my.ccsu.edu', 'Minnie', 'Mouse', 80802573, 'student', 'INACTIVE');
-INSERT INTO Users (uid,email,fname,lname,ccsuID,role,status) VALUES (11, 'christopher.smith@my.ccsu.edu', 'Christopher', 'Smith', 30302580, 'coordinator', 'ACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (1, 'Jane.Doe@my.ccsu.edu', 'Jane', 'Doe', 80802580, 'reader', 'ACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (2, 'Johnny.Cash@my.ccsu.edu', 'Johnny', 'Cash', 80802581, 'reader', 'ACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (3, 'Owen.Wilson@my.ccsu.edu', 'Owen', 'Wilson', 80802582, 'reader', 'ACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (4, 'Will.Smith@my.ccsu.edu', 'Will', 'Smith', 80802583, 'reader', 'ACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (5, 'Raine.Dawson@my.ccsu.edu', 'Raine', 'Dawson', 80802584, 'reader', 'ACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (6, 'Jon.Snow@my.ccsu.edu', 'Jon', 'Snow', 80802585, 'reader', 'ACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (7, 'Roger.Williams@my.ccsu.edu', 'Roger', 'Williams', 80802586, 'student', 'ACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (8, 'Jim.Carrey@my.ccsu.edu', 'Jim', 'Carrey', 80802571, 'student', 'ACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (9, 'Mickey.Mouse@my.ccsu.edu', 'Mickey', 'Mouse', 80802572, 'student', 'INACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (10, 'Minnie.Mouse@my.ccsu.edu', 'Minnie', 'Mouse', 80802573, 'student', 'INACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (11, 'christopher.smith@my.ccsu.edu', 'Christopher', 'Smith', 30302580, 'coordinator', 'ACTIVE');
+
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (1,true,null,'$2a$12$cHWHrchdpEd3K2IiHSG8.uWg8W5bPr5wX5gtTtOUz.saVuh4wYcpm','christopher.smith@my.ccsu.edu',11);
+
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (1,'user','christopher.smith@my.ccsu.edu',1);
 
 INSERT INTO QuestionsTemplate (qtid,display,templateId,templateActive) VALUES (1, 'The purpose statement is paragraph 1, sentence 1.', 1, TRUE);
 INSERT INTO QuestionsTemplate (qtid,display,templateId,templateActive) VALUES (2, 'Two thirds of page 1 is summary of methodology.', 1, TRUE);

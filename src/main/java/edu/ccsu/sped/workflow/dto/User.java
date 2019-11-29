@@ -11,12 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name="Users")
+@Table(name="UserDTO")
 public class User {
 	
 	@Id
@@ -36,7 +37,6 @@ public class User {
 	@Column(name = "role")
 	private String role; 
 	
-	
 	@Column(name = "email", unique = true)
 	private String email;
 	
@@ -46,6 +46,9 @@ public class User {
 	@ManyToMany(mappedBy="user") // mapped by user attribute in Workflow object, so avoid duplicate third table map uid to wid
 	@JsonBackReference
 	private List<Workflow> workflow; 
+	
+	@OneToOne(mappedBy = "user")
+	private LoginData loginData;
 	
 	// Constructor
 	public User() {}
@@ -71,6 +74,19 @@ public class User {
 		this.email = email;
 		this.status = status;
 		this.workflow = workflow;
+	}
+	
+	public User(Integer uid, String fname, String lname, Integer ccsuID, String role, String email, String status,
+			List<Workflow> workflow, LoginData loginData) {
+		this.uid = uid;
+		this.fname = fname;
+		this.lname = lname;
+		this.ccsuID = ccsuID;
+		this.role = role;
+		this.email = email;
+		this.status = status;
+		this.workflow = workflow;
+		this.loginData = loginData;
 	}
 
 	public Integer getUid() {
@@ -135,6 +151,14 @@ public class User {
 
 	public void setWorkflow(List<Workflow> workflow) {
 		this.workflow = workflow;
+	}
+	
+	public LoginData getLoginData() {
+		return loginData;
+	}
+	
+	public void setLoginData(LoginData loginData) {
+		this.loginData = loginData;
 	}
 	
 }
