@@ -26,6 +26,10 @@ public class UserService {
 		return userRepository.findById(Id);
 	}
 	
+	public User getUserByEmail(String email) {
+		return userRepository.findUserByEmail(email);
+	}
+	
 	// POST new instance
 	public void addUser(User user) {
 		userRepository.save(user);

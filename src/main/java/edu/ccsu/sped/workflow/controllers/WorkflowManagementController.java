@@ -26,7 +26,7 @@ public class WorkflowManagementController {
 	@Autowired
 	private UserService userService;
     
-	@GetMapping("/")
+	@GetMapping("/index")
 	public String index(Model model) {
 		List<WorkflowHelper> workflowHelpers = new LinkedList<WorkflowHelper>();
 		workflowHelpers = getActiveWorkflowsWithUsers();
