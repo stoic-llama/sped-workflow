@@ -40,15 +40,21 @@ public class AppUserPrincipal implements UserDetails {
     	final List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("User"));
     	
     	if(user.getRole().equals("coordinator")) {
-    		authorities.add(new SimpleGrantedAuthority("Admin"));
+    		authorities.add(new SimpleGrantedAuthority("ROLE_COORDINATOR"));
     	}
     	
     	if(user.getRole().equals("reader")) {
-    		authorities.add(new SimpleGrantedAuthority("Reader"));
+    		authorities.add(new SimpleGrantedAuthority("ROLE_READER"));
     	}
     	
     	if(user.getRole().equals("instructor")) {
-    		authorities.add(new SimpleGrantedAuthority("Instructor"));
+    		authorities.add(new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
+    		authorities.add(new SimpleGrantedAuthority("ROLE_READER"));
+    		
+    	}
+    	
+    	if(user.getRole().equals("student")) {
+    		authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
     	}
         
         return authorities;
