@@ -1,5 +1,6 @@
 package edu.ccsu.sped.workflow.controllers;
 
+import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class WorkflowManagementController {
 	@Autowired
 	private UserService userService;
     
-	@GetMapping("/index")
+	@GetMapping("/")
 	public String index(Model model) {
 		List<WorkflowHelper> workflowHelpers = new LinkedList<WorkflowHelper>();
 		workflowHelpers = getActiveWorkflowsWithUsers();
@@ -93,9 +94,50 @@ public class WorkflowManagementController {
 		return workflowHelpers;	
 	}
 	
-	
-	
-	
+	private List<WorkflowHelper> getActiveWorkflowsByAuthenticatedUser() {
+		// get all the workflows that are not equal to "DONE"
+		List<Workflow> workflows = workflowService.getWorkflows();
+		List<WorkflowHelper> workflowHelpers = new LinkedList<WorkflowHelper>();
+		Principal principal;
+		Optional<User> u;
+		User user = new User();
+		
+		for (Workflow workflow : workflows) {
+			if (!(workflow.getStatus().equals("DONE"))) { // Not equal Done
+				WorkflowHelper w = new WorkflowHelper(); 
+				
+				// Get Wid
+				w.setWid(workflow.getWid());
+				
+				// Get Primary Reader First and Last Name
+				u = userService.getUserById(workflow.getPrimaryReaderUid());
+				user = u.get();
+				w.setPrimaryReaderFName(user.getFname());
+				w.setPrimaryReaderLName(user.getLname());
+
+				// Get Student First and Last Name
+				u = userService.getUserById(workflow.getStudentUid());
+				user = u.get();
+				w.setStudentFName(user.getFname());
+				w.setStudentLName(user.getLname());
+
+				// Get Secondary Reader First and Last Name
+				u = userService.getUserById(workflow.getSecondaryReaderUid());
+				user = u.get();
+				w.setSecondaryReaderFName(user.getFname());
+				w.setSecondaryReaderLName(user.getLname());
+
+				// Get Workflow Status
+				w.setWorkflowStatus(workflow.getStatus());
+				
+				// Add element to list of workflowHelpers  
+				workflowHelpers.add(w);
+			}
+		}
+		
+		// return list of all active workflows with names, embodied in list of workflowHelpers
+		return workflowHelpers;
+	}
 	
 	
 	@GetMapping(value = "/oneworkflow")

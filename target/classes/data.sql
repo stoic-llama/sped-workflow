@@ -1,8 +1,8 @@
 
-/*
+/* UserDTO Insertion */
 INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (1, 'Jane.Doe@my.ccsu.edu', 'Jane', 'Doe', 80802580, 'reader', 'ACTIVE');
 INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (2, 'Johnny.Cash@my.ccsu.edu', 'Johnny', 'Cash', 80802581, 'reader', 'ACTIVE');
-INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (3, 'Owen.Wilson@my.ccsu.edu', 'Owen', 'Wilson', 80802582, 'reader', 'ACTIVE');
+INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (3, 'Owen.Wilson@my.ccsu.edu', 'Owen', 'Wilson', 80802582, 'instructor', 'ACTIVE');
 INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (4, 'Will.Smith@my.ccsu.edu', 'Will', 'Smith', 80802583, 'reader', 'ACTIVE');
 INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (5, 'Raine.Dawson@my.ccsu.edu', 'Raine', 'Dawson', 80802584, 'reader', 'ACTIVE');
 INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (6, 'Jon.Snow@my.ccsu.edu', 'Jon', 'Snow', 80802585, 'reader', 'ACTIVE');
@@ -10,14 +10,41 @@ INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (7, 'Roger
 INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (8, 'Jim.Carrey@my.ccsu.edu', 'Jim', 'Carrey', 80802571, 'student', 'ACTIVE');
 INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (9, 'Mickey.Mouse@my.ccsu.edu', 'Mickey', 'Mouse', 80802572, 'student', 'INACTIVE');
 INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (10, 'Minnie.Mouse@my.ccsu.edu', 'Minnie', 'Mouse', 80802573, 'student', 'INACTIVE');
-*/
 INSERT INTO UserDTO (uid,email,fname,lname,ccsuID,role,status) VALUES (11, 'christopher.smith@my.ccsu.edu', 'Christopher', 'Smith', 30302580, 'coordinator', 'ACTIVE');
 
+/* User Insertion */
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (1,true,null,'$2a$12$vX6N4QHIFPl0kRGQznweZ.Mv7NbRejPh1rACg7zA604S18uTYBbRq','Jane.Doe@my.ccsu.edu',1);
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (2,true,null,'$2a$12$1/1dg5W7ntY5K2wXVgwhmOC6DiVTjzAqFKpeZeMhWg8yaC7VJtenW','Johnny.Cash@my.ccsu.edu',2);
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (3,true,null,'$2a$12$rXUDDdwPimbMRp6kpXOudeggxU57ierZL9w36EFz.E/t/YRhB00VC','Owen.Wilson@my.ccsu.edu',3);
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (4,true,null,'$2a$12$HU.QyThgeAhcw08N2PvTCeG4XPWWvb3BLVTniItZpKndcrcB48a5K','Will.Smith@my.ccsu.edu',4);
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (5,true,null,'$2a$12$sSd4Zbp9lyfBaaQOl0LpI.15Dyqr91uFy1mbJ2mcVbm37qyldTHdi','Raine.Dawson@my.ccsu.edu',5);
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (6,true,null,'$2a$12$dZgmsdMn.1c5YTprTcqwxOnU85Y7aLWrE2SeolJg6VoeEFCqdysdS','Jon.Snow@my.ccsu.edu',6);
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (7,true,null,'$2a$12$WdN55bpc5ElWwZ67LKlg6Od/IlkULVRnrdlXK92uL6DViHqaannU6','Roger.Williams@my.ccsu.edu',7);
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (8,true,null,'$2a$12$LkB0gz.TiCWj58r/g06BtOzvmExIYoCzamo.qHnmHVeUcXvsaHiKq','Jim.Carrey@my.ccsu.edu',8);
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (9,true,null,'$2a$12$mlYkem86Vyxx8pC4zEo5Pu8Nso17qAUwVXGNi/pjU0DrF96q2bkbW','Mickey.Mouse@my.ccsu.edu',9);
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (10,true,null,'$2a$12$.RfCRZOy0mFKU7.m9xF2BOelljLoFvTmXS06TrTha0R2wgdd7aBt2','Minnie.Mouse@my.ccsu.edu',10);
 
-INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (1,true,null,'$2a$12$cHWHrchdpEd3K2IiHSG8.uWg8W5bPr5wX5gtTtOUz.saVuh4wYcpm','christopher.smith@my.ccsu.edu',11);
+INSERT INTO Users (ldid,enabled,last_login,password,username,user_uid) VALUES (11,true,null,'$2a$12$cHWHrchdpEd3K2IiHSG8.uWg8W5bPr5wX5gtTtOUz.saVuh4wYcpm','christopher.smith@my.ccsu.edu',11);
 
-INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (1,'coordinator','christopher.smith@my.ccsu.edu',1);
+/* Authorities Insertion */
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (1,'reader','Jane.Doe@my.ccsu.edu',1);
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (2,'reader','Johnny.Cash@my.ccsu.edu',2);
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (3,'instructor','Owen.Wilson@my.ccsu.edu',3);
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (4,'reader','Will.Smith@my.ccsu.edu',4);
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (5,'reader','Raine.Dawson@my.ccsu.edu',5);
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (6,'reader','Jon.Snow@my.ccsu.edu',6);
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (7,'student','Roger.Williams@my.ccsu.edu',7);
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (8,'student','Jim.Carrey@my.ccsu.edu',8);
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (9,'student','Mickey.Mouse@my.ccsu.edu',9);
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (10,'student','Minnie.Mouse@my.ccsu.edu',10);
 
+INSERT INTO Authorities (uaid,authority,username,login_ldid) VALUES (11,'coordinator','christopher.smith@my.ccsu.edu',11);
+
+
+
+
+
+/* Other Table Insertions */
 
 INSERT INTO QuestionsTemplate (qtid,display,templateId,templateActive) VALUES (1, 'The purpose statement is paragraph 1, sentence 1.', 1, TRUE);
 INSERT INTO QuestionsTemplate (qtid,display,templateId,templateActive) VALUES (2, 'Two thirds of page 1 is summary of methodology.', 1, TRUE);
