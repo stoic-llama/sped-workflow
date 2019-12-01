@@ -74,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/user-management/savenew").hasAuthority("coordinator")
         	.antMatchers("/workflow-management").hasAuthority("coordinator")
         	.antMatchers("/addWorkflow/").hasAuthority("coordinator")
+        	.antMatchers("/view-all-workflows").hasAuthority("coordinator")
         	.antMatchers("/login")
             .permitAll()
             .and()
