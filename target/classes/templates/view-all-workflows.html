@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="webjars/jquery/3.4.1/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
+	<meta charset="ISO-8859-1"/>
+	<title>SPED Workflow - View All Workflows</title>
+</head>
+<body>
+<div th:insert="fragments.html :: topnav"></div>
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col">
+					    <p></p>
+					    <p><strong>All Active Workflows</strong></p>
+					    <div class="table-responsive">
+					        <table class="table">
+					           <thead>
+					               <tr>
+										<th>Workflow ID</th>			
+										<th>Primary Reader</th>
+										<th>Student</th>
+										<th>Secondary Reader</th>
+										<th>Workflow Status</th>
+										<th>View Details</th>
+					               </tr>
+					           </thead>
+					           <tbody>
+									<tr th:each = "activeWorkflow:${activeWorkflows}">
+										<td th:text = "${activeWorkflow.wid}">Wid</td>
+										<td th:text = "${activeWorkflow.primaryReaderFName} + ' ' + ${activeWorkflow.primaryReaderLName}">Primary Reader Name</td>
+										<td th:text = "${activeWorkflow.studentFName} + ' ' + ${activeWorkflow.studentLName}">Student Name</td>
+										<td th:text = "${activeWorkflow.secondaryReaderFName} + ' ' + ${activeWorkflow.secondaryReaderLName}">Secondary Reader Name</td>
+										<td th:text = ${activeWorkflow.workflowStatus}>Workflow Status</td>	
+										<td><a th:href="@{~/workflowdetail(wid=${activeWorkflow.wid})}" class="btn btn-secondary detailsButton">Details</a></td>		
+									</tr>
+					           </tbody>
+					       </table>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

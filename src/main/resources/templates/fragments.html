@@ -20,12 +20,12 @@
                     <li class="nav-item dropdown"><a class="dropdown-toggle nav-link active mx-3" data-toggle="dropdown" aria-expanded="false" th:href="@{~/#}" style="color: #ffffff;">Workflow Management</a>
                         <div class="dropdown-menu dropdown-menu-right" role="menu">
                         <a class="dropdown-item" role="presentation" th:href="@{~/workflow-management}">Workflow Management</a>
-                        <a class="dropdown-item" role="presentation" th:href="@{~/#}">View All Workflows</a>
+                        <a class="dropdown-item" role="presentation" th:href="@{~/view-all-workflows}">View All Workflows</a>
                     </li>
                     <li class="nav-item" role="presentation"><a class="nav-link active mx-3" th:href="@{~/user-management}" style="color: #ffffff;">User Management</a></li>
                     <li class="nav-item" role="presentation">
                     	<form class="form-inline my-2 my-log-0" th:action="@{/logout}" method="post">
-                    		<button class="btn btn-outline-primary my-2 my-sm-0 btn-sm" type="submit">Sign Out</button>
+                    		<button class="btn btn-outline-danger my-2 my-sm-0 btn-sm" type="submit">Sign Out</button>
                     	</form>
                    	</li>
                 </ul>
