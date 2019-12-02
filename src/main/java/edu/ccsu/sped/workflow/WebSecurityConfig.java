@@ -67,6 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/workflowdetail").hasAnyAuthority("coordinator,instructor,reader,student")
         	.antMatchers("/workflowdetail/edit").hasAnyAuthority("coordinator,instructor,reader")
         	.antMatchers("/workflowdetail/save").hasAnyAuthority("coordinator,instructor,reader")
+        	.antMatchers("/submitassignment").hasAuthority("student")
+        	.antMatchers("/saveportfolio").hasAuthority("student")
         	.antMatchers("/user-management").hasAuthority("coordinator")
         	.antMatchers("/user-management/create").hasAuthority("coordinator")
         	.antMatchers("/user-management/edit").hasAuthority("coordinator")

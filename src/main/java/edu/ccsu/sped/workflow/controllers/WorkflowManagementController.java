@@ -1,5 +1,6 @@
 package edu.ccsu.sped.workflow.controllers;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -11,10 +12,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.ccsu.sped.workflow.dto.LoginData;
 import edu.ccsu.sped.workflow.dto.User;
+import edu.ccsu.sped.workflow.dto.UserAuthorities;
+import edu.ccsu.sped.workflow.dto.UserCreationDto;
 import edu.ccsu.sped.workflow.dto.Workflow;
 import edu.ccsu.sped.workflow.dto.WorkflowHelper;
 import edu.ccsu.sped.workflow.services.UserService;
@@ -60,6 +65,28 @@ public class WorkflowManagementController {
 		model.addAttribute("users", userService.getUsers());
 		model.addAttribute("workflow",workflow);	
 		return "workflow-management";
+	}
+	
+	@GetMapping("/submitassignment")
+	public String submitAssignment(Model model) {
+		List<WorkflowHelper> workflows= getActiveWorkflowsByAuthenticatedUser();
+		
+		WorkflowHelper workflowHelper = workflows.get(0);
+		
+		
+		Workflow workflow = workflowService.getWorkflowById(workflowHelper.getWid()).get();
+		
+		model.addAttribute("activeworkflow", workflow);
+		
+		return"submit-assignment";
+	}
+	
+	@PostMapping(value = "/saveportfolio")
+	public String savePortfolioURL(@ModelAttribute("activeworkflow") Workflow activeworkflow, Model model) {
+
+		workflowService.updateWorkflow(activeworkflow);
+		
+		return "redirect:/";
 	}
 	
 	@GetMapping(value = "/oneworkflow")

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="webjars/jquery/3.4.1/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
+	<meta charset="ISO-8859-1"/>
+	<title>Submit Assignment</title>
+</head>
+<body>
+
+<div th:insert="fragments.html :: topnav"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1> Submit Assignment </h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<form action="#" class="form-horizontal"
+				  th:action="@{/saveportfolio}"
+				  th:object="${activeworkflow}"
+				  method="post">
+				<fieldset>
+					<span class="pull-right">
+						    <input type="submit" id="submitButton" class="btn btn-success" th:value="Save">
+						    <input type="reset" id="resetButton" class="btn btn-danger" th:value="Reset"/>
+					</span>
+					<table class="table">
+						<thead>
+						<tr>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th>Portfolio URL</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td><input hidden th:value="${wid}" th:field="*{wid}"/></td>
+							<td><input hidden th:value="${status}" th:field="*{status}"/></td>
+							<td><input hidden th:value="${primaryReaderUid}" th:field="*{primaryReaderUid}"/></td>
+							<td><input hidden th:value="${secondaryReaderUid}" th:field="*{secondaryReaderUid}"/></td>
+							<td><input hidden th:value="${studentUid}" th:field="*{studentUid}"/></td>
+							<td><input th:value="${portfolioURL}" th:field="*{portfolioURL}" required/></td>
+						</tr>
+						</tbody>
+					</table>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>
