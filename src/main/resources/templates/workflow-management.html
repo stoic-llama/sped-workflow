@@ -102,14 +102,13 @@
 							<td th:text = "${activeWorkflow.secondaryReaderFName} + ' ' + ${activeWorkflow.secondaryReaderLName}">Secondary Reader Name</td>
 							<td th:text = ${activeWorkflow.workflowStatus}>Workflow Status</td>	
 							<td><a th:href="@{~/workflowdetail(wid=${activeWorkflow.wid})}" class="btn btn-secondary detailsButton">Details</a></td>		
-							<td><a th:href="@{~/#}" class="btn btn-secondary editButton">Edit</a></td>
+							<td><a th:href="@{~/find-workflow-to-edit(wid=${activeWorkflow.wid})}" class="btn btn-secondary">Edit</a></td>								
 						</tr>
 		           </tbody>
 		       </table>
 			</div>
 		</div>
 	</div>
-	
 </div>
 
 </body>

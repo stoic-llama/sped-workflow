@@ -13,7 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.ccsu.sped.workflow.dto.LoginData;
@@ -48,7 +53,7 @@ public class WorkflowManagementController {
 	@GetMapping(value={"/view-all-workflows"})
 	public String viewAllWorkflows(Model model) {
 		List<WorkflowHelper> workflowHelpers = new LinkedList<WorkflowHelper>();
-		workflowHelpers = getActiveWorkflowsWithUsers();
+		workflowHelpers = getAllWorkflows();
 		Workflow workflow = new Workflow();	
 		model.addAttribute("activeWorkflows", workflowHelpers);
 		model.addAttribute("users", userService.getUsers());
@@ -71,14 +76,19 @@ public class WorkflowManagementController {
 	public String submitAssignment(Model model) {
 		List<WorkflowHelper> workflows= getActiveWorkflowsByAuthenticatedUser();
 		
-		WorkflowHelper workflowHelper = workflows.get(0);
+		try {
+				WorkflowHelper workflowHelper = workflows.get(0);
+				Workflow workflow = workflowService.getWorkflowById(workflowHelper.getWid()).get();
+				model.addAttribute("activeworkflow", workflow);
+				return"submit-assignment";
+		}
+		
+		catch (Exception e){
+			System.out.println(e);
+			return "index";
+		}
 		
 		
-		Workflow workflow = workflowService.getWorkflowById(workflowHelper.getWid()).get();
-		
-		model.addAttribute("activeworkflow", workflow);
-		
-		return"submit-assignment";
 	}
 	
 	@PostMapping(value = "/saveportfolio")
@@ -116,6 +126,59 @@ public class WorkflowManagementController {
 		return "redirect:/workflow-management"; // go back to workflow-management page after updating database
 	}
 	
+	@GetMapping(value = "/find-workflow-to-edit")
+	public String findSelectedWorkflow(Model model, @RequestParam(value = "wid") Integer wid) {
+		Optional<Workflow> w = workflowService.getWorkflowById(wid);
+		Workflow existingWorkflow = w.get();
+		List<WorkflowHelper> workflowHelpers = new LinkedList<WorkflowHelper>();
+		workflowHelpers = getActiveWorkflowsWithUsers();
+		Workflow workflow = new Workflow();	
+		
+		model.addAttribute("activeWorkflows", workflowHelpers);
+		model.addAttribute("existingWorkflow", existingWorkflow);
+		model.addAttribute("users", userService.getUsers());
+		model.addAttribute("workflow",workflow);
+		
+		return "edit-workflow-header";		
+	}
+	
+		
+	@RequestMapping(value = "/addWorkflowWithStatus", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.GET})
+	public String addWorkflowWithStatus( 
+										@RequestParam(value="wid") Integer wid,
+										@RequestParam(value="primaryReaderUid") String primaryReaderUid, 
+										@RequestParam(value="studentUid") String studentUid, 
+										@RequestParam(value="secondaryReaderUid") String secondaryReaderUid, 
+										@RequestParam(value="status") String status) 
+	{
+		Optional<Workflow> w = workflowService.getWorkflowById(wid);
+		
+		Workflow workflow = w.get();
+		
+		List <User> users = workflow.getUser();
+		users.clear();
+		
+		Optional<User> pr = userService.getUserById(Integer.parseInt(primaryReaderUid));
+		User primaryReader = pr.get();
+		users.add(primaryReader);
+		workflow.setPrimaryReaderUid(Integer.parseInt(primaryReaderUid));
+		
+		Optional<User> s = userService.getUserById(Integer.parseInt(studentUid));
+		User student = s.get();
+		users.add(student);
+		workflow.setStudentUid(Integer.parseInt(studentUid));
+		
+		Optional<User> sr = userService.getUserById(Integer.parseInt(secondaryReaderUid));
+		User secondaryReader = sr.get();
+		users.add(secondaryReader);
+		workflow.setSecondaryReaderUid(Integer.parseInt(secondaryReaderUid));
+			
+		workflow.setStatus(status);
+		
+		workflowService.updateWorkflow(workflow);
+		
+		return "redirect:/workflow-management"; // go back to workflow-management page after updating database
+	}
 	
 	
 	private List<WorkflowHelper> getActiveWorkflowsWithUsers () {
@@ -161,6 +224,51 @@ public class WorkflowManagementController {
 		// return list of all active workflows with names, embodied in list of workflowHelpers
 		return workflowHelpers;	
 	}
+	
+	
+	private List<WorkflowHelper> getAllWorkflows () {
+		// get all the workflows that are not equal to "DONE"
+		List<Workflow> workflows = workflowService.getWorkflows();
+		List<WorkflowHelper> workflowHelpers = new LinkedList<WorkflowHelper>();
+		Optional<User> u;
+		User user = new User();
+		
+		for (Workflow workflow : workflows) {
+				WorkflowHelper w = new WorkflowHelper(); 
+				
+				// Get Wid
+				w.setWid(workflow.getWid());
+				
+				// Get Primary Reader First and Last Name
+				u = userService.getUserById(workflow.getPrimaryReaderUid());
+				user = u.get();
+				w.setPrimaryReaderFName(user.getFname());
+				w.setPrimaryReaderLName(user.getLname());
+
+				// Get Student First and Last Name
+				u = userService.getUserById(workflow.getStudentUid());
+				user = u.get();
+				w.setStudentFName(user.getFname());
+				w.setStudentLName(user.getLname());
+
+				// Get Secondary Reader First and Last Name
+				u = userService.getUserById(workflow.getSecondaryReaderUid());
+				user = u.get();
+				w.setSecondaryReaderFName(user.getFname());
+				w.setSecondaryReaderLName(user.getLname());
+
+				// Get Workflow Status
+				w.setWorkflowStatus(workflow.getStatus());
+				
+				// Add element to list of workflowHelpers  
+				workflowHelpers.add(w);
+			
+		}
+		
+		// return list of all active workflows with names, embodied in list of workflowHelpers
+		return workflowHelpers;	
+	}
+	
 	
 	private List<WorkflowHelper> getActiveWorkflowsByAuthenticatedUser() {
 		List<Workflow> workflows = workflowService.getWorkflows();

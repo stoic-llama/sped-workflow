@@ -4,10 +4,13 @@ public class WorkflowHelper {
 	private Integer wid;
 	private String primaryReaderFName;
 	private String primaryReaderLName;
+	private String primaryReaderFullName;
 	private String studentFName;
 	private String studentLName;
+	private String studentFullName;
 	private String secondaryReaderFName;
 	private String secondaryReaderLName;
+	private String secondaryReaderFullName;
 	private String workflowStatus;
 	
 	// Constructor
@@ -18,10 +21,13 @@ public class WorkflowHelper {
 		this.wid = wid;
 		this.primaryReaderFName = primaryReaderFName;
 		this.primaryReaderLName = primaryReaderLName;
+		this.primaryReaderFullName = primaryReaderFName + " " + primaryReaderLName;
 		this.studentFName = studentFName;
 		this.studentLName = studentLName;
+		this.studentFullName = studentFName + " " + studentLName;
 		this.secondaryReaderFName = secondaryReaderFName;
 		this.secondaryReaderLName = secondaryReaderLName;
+		this.secondaryReaderFullName = secondaryReaderFName + " " + secondaryReaderLName;
 		this.workflowStatus = workflowStatus;
 	}
 
@@ -90,8 +96,29 @@ public class WorkflowHelper {
 	public void setWorkflowStatus(String workflowStatus) {
 		this.workflowStatus = workflowStatus;
 	}
-	
-	
-	
+
+	public String getPrimaryReaderFullName() {
+		return primaryReaderFullName;
+	}
+
+	public void setPrimaryReaderFullName(String primaryReaderFullName) {
+		this.primaryReaderFullName = primaryReaderFullName;
+	}
+
+	public String getStudentFullName() {
+		return studentFullName;
+	}
+
+	public void setStudentFullName(String studentFullName) {
+		this.studentFullName = studentFullName;
+	}
+
+	public String getSecondaryReaderFullName() {
+		return secondaryReaderFullName;
+	}
+
+	public void setSecondaryReaderFullName(String secondaryReaderFullName) {
+		this.secondaryReaderFullName = secondaryReaderFullName;
+	}
 	
 }

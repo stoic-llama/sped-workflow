@@ -27,7 +27,7 @@ public class Workflow {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer wid;
-	private String status = "NOT STARTED"; // initial workflow status
+	private String status = "INITIATED"; // initial workflow status
 	private Integer primaryReaderUid;
 	private Integer secondaryReaderUid;
 	private Integer studentUid;

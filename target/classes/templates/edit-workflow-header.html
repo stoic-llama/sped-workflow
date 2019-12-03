@@ -4,7 +4,7 @@
 	<link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="webjars/jquery/3.4.1/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
+	<!-- <script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>  -->
 	<meta charset="ISO-8859-1"/>
 	<title>SPED Workflow - Workflow Management - Edit Workflow</title>
 </head>
@@ -14,117 +14,214 @@
 
 <div class="container">
 	
-	<!-- Start New Workflow -->
+	<!-- Edit Workflow -->
 	<div class="row mt-2">
 		<div class="col">
 		    <p></p>
 		    <p><strong>Edit Workflow</strong></p>
 		    <div class="table-responsive">
-			    <form th:action="@{/addWorkflow/}" th:object="${workflow}" method="post">
+		  		<form th:action="@{/addWorkflowWithStatus/}" th:object="${existingWorkflow}" method="put">
+		    
 		        <table class="table">
 		            <thead>
 		                <tr>
+		                    <th>Wid</th>
 		                    <th>Primary Reader</th>
 		                    <th>Student</th>
 		                    <th>Secondary Reader</th>
 		                    <th>Workflow Status</th>
-		                    <th>Edit Workflow</th>
+		                    <th>Save</th>
 		                </tr>
 		            </thead>
 		            <tbody>
-		                <tr>
-		                    <td>
-								<input th:name="|users[${itemStat.index}].fname|" th:value="${user.getFname()}" required/>
-								
-								
-								<select class="form-control" id="id" th:field="*{primaryReaderUid}">
-									<option value="0">---Select Primary Reader---</option>
-									<option  	
-									th:each="user,iterStat:${users}" 
-								 	th:value="${user.uid}" 
-								 	th:text="${user.lname} + ', ' + ${user.fname}"
-								 	th:if="${user.role} == 'reader'">
-									</option>
-								</select>	                    
-		                    </td>
-		                    <td>  
-								<select class="form-control" id="id" th:field="*{studentUid}">
-									<option value="0">---Select Student---</option>
-									<option 
-									th:each="user,iterStat:${users}" 
-								 	th:value="${user.uid}" 
-								 	th:text="${user.lname} + ', ' + ${user.fname}"
-								 	th:if="${user.role} == 'student' and ${user.status} == 'ACTIVE'">
-									</option>
-								</select>	                    
-		                    </td>
-		                    <td>
-								<select class="form-control" id="id" th:field="*{secondaryReaderUid}">									
-									<option value="0">---Select Secondary Reader---</option>
-									<option 
-									th:each="user,iterStat:${users}" 
-								 	th:value="${user.uid}" 
-								 	th:text="${user.lname} + ', ' + ${user.fname}"
-								 	th:if="${user.role} == 'reader'">
-									</option>
-								</select>	                    
-		                    </td>
-		                    <td>
-		                    	<select class="form-control" id="id" th:field="*{secondaryReaderUid}">									
-									<option value="0">---Select Secondary Reader---</option>
-									<option 
-									th:each="user,iterStat:${users}" 
-								 	th:value="${user.uid}" 
-								 	th:text="${user.lname} + ', ' + ${user.fname}"
-								 	th:if="${user.role} == 'reader'">
-									</option>
-								</select>	
-		                    </td>
-		                    <td><button class="btn btn-primary" type="submit">Start</button></td>  
-		 				</tr>
-		            </tbody>
-		        </table>
-		        </form>
-		    </div>
-		</div>
-	</div>
-	
-	
-	<!-- Display Active Workflows -->
-	<div class="row mt-2">
-		<div class="col">
-		    <p></p>
-		    <p><strong>Active Workflows</strong></p>
-		    <div class="table-responsive">
-		        <table class="table">
-		           <thead>
-		               <tr>
-							<th>Workflow ID</th>			
-							<th>Primary Reader</th>
-							<th>Student</th>
-							<th>Secondary Reader</th>
-							<th>Workflow Status</th>
-							<th>View Details</th>
-							<th>Edit Workflow</th>
-		               </tr>
-		           </thead>
-		           <tbody>
-						<tr th:each = "activeWorkflow:${activeWorkflows}">
-							<td th:text = "${activeWorkflow.wid}">Wid</td>
-							<td th:text = "${activeWorkflow.primaryReaderFName} + ' ' + ${activeWorkflow.primaryReaderLName}">Primary Reader Name</td>
-							<td th:text = "${activeWorkflow.studentFName} + ' ' + ${activeWorkflow.studentLName}">Student Name</td>
-							<td th:text = "${activeWorkflow.secondaryReaderFName} + ' ' + ${activeWorkflow.secondaryReaderLName}">Secondary Reader Name</td>
-							<td th:text = ${activeWorkflow.workflowStatus}>Workflow Status</td>	
-							<td><a th:href="@{~/workflowdetail(wid=${activeWorkflow.wid})}" class="btn btn-secondary detailsButton">Details</a></td>		
-							<td><a th:href="@{~/#}" class="btn btn-secondary editButton">Edit</a></td>
-						</tr>
+	                <tr>
+	                    <td>
+					        <div class="form-group">
+					            <input type="text" class="form-control" th:field="*{wid}" id="wid" name="wid" readonly />
+					        </div>                    
+					    </td>
+	                    <td>
+							<select class="form-control" id="id" th:field="*{primaryReaderUid}">
+								<option value="0">---Select Primary Reader---</option>
+								<option  	
+								th:each="user,iterStat:${users}" 
+							 	th:value="${user.uid}" 
+							 	th:text="${user.lname} + ', ' + ${user.fname}"
+							 	th:if="${user.role} == 'reader' and ${user.status} == 'ACTIVE'"
+							 	name="primaryReaderUid">
+								</option>
+							</select>	                    
+	                    </td>
+	                    <td>  
+							<select class="form-control" id="id" th:field="*{studentUid}">
+								<option value="0">---Select Student---</option>
+								<option 
+								th:each="user,iterStat:${users}" 
+							 	th:value="${user.uid}" 
+							 	th:text="${user.lname} + ', ' + ${user.fname}"
+							 	th:if="${user.role} == 'student' and ${user.status} == 'ACTIVE'"
+							 	name="studentUid">
+								</option>
+							</select>	                    
+	                    </td>
+	                    <td>
+							<select class="form-control" id="id" th:field="*{secondaryReaderUid}">									
+								<option value="0">---Select Secondary Reader---</option>
+								<option 
+								th:each="user,iterStat:${users}" 
+							 	th:value="${user.uid}" 
+							 	th:text="${user.lname} + ', ' + ${user.fname}"
+							 	th:if="${user.role} == 'reader' and ${user.status} == 'ACTIVE'"
+							 	name="secondaryReaderUid">
+								</option>
+							</select>	                    
+	                    </td>
+	                    <td>
+							<select class="form-control" id="id" th:field="*{status}">									
+								<option th:value="0">---Select Workflow Status---</option>
+								<option th:field="*{status}" th:value="INITIATED" name="status" th:text="INITIATED">INITIATED</option>
+								<option th:field="*{status}" th:value="DONE" name="status" th:text="DONE">DONE</option>
+							</select>	                    
+	                    </td> 			
+						<td>
+							<button class="btn btn-primary" type="submit">Save</button>
+						</td>  								
+	 				</tr>		
 		           </tbody>
 		       </table>
+		       
 			</div>
 		</div>
 	</div>
-	
 </div>
 
 </body>
 </html>
+
+
+
+
+
+
+<!-- 
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<form th:action="@{/addWorkflowWithStatus/}" th:object="${existingWorkflow}" method="put">
+	  <div class="modal-dialog modal-xl" role="document">
+	    <div class="modal-content">
+	      
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Edit Workflow Header</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	     
+	      <div class="modal-body">
+	        <table class="table">
+	            <thead>
+	                <tr>
+	                    <th>WID</th>
+	                    <th>Primary Reader</th>
+	                    <th>Student</th>
+	                    <th>Secondary Reader</th>
+	                    <th>Workflow Status</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr>
+	                    <td>
+					        <div class="form-group">
+					            <input type="text" th:value="${wid}" class="form-control" id="wid" name="wid" readonly />
+					        </div>                    
+					    </td>
+	                    <td>
+							<select class="form-control" id="id" th:field="*{primaryReaderUid}">
+								<option value="0">---Select Primary Reader---</option>
+								<option  	
+								th:each="user,iterStat:${users}" 
+							 	th:value="${user.uid}" 
+							 	th:text="${user.lname} + ', ' + ${user.fname}"
+							 	th:if="${user.role} == 'reader' and ${user.status} == 'ACTIVE'">
+								</option>
+							</select>	                    
+	                    </td>
+	                    <td>  
+							<select class="form-control" id="id" th:field="*{studentUid}">
+								<option value="0">---Select Student---</option>
+								<option 
+								th:each="user,iterStat:${users}" 
+							 	th:value="${user.uid}" 
+							 	th:text="${user.lname} + ', ' + ${user.fname}"
+							 	th:if="${user.role} == 'student' and ${user.status} == 'ACTIVE'">
+								</option>
+							</select>	                    
+	                    </td>
+	                    <td>
+							<select class="form-control" id="id" th:field="*{secondaryReaderUid}">									
+								<option value="0">---Select Secondary Reader---</option>
+								<option 
+								th:each="user,iterStat:${users}" 
+							 	th:value="${user.uid}" 
+							 	th:text="${user.lname} + ', ' + ${user.fname}"
+							 	th:if="${user.role} == 'reader' and ${user.status} == 'ACTIVE'">
+								</option>
+							</select>	                    
+	                    </td>
+	                    <td>
+							<select class="form-control" id="id" th:field="*{status}">									
+								<option th:value="0">---Select Workflow Status---</option>
+								<option th:value="${status}" th:text="INITIATED">INITIATED</option>
+								<option th:value="${status}" th:text="DONE">DONE</option>
+							</select>	                    
+	                    </td> 
+	 				</tr>
+	            </tbody>
+	        </table>
+	      </div>
+	      
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Save</button>
+	      </div>
+	      
+	    </div>
+	  </div>
+	</form>
+</div>
+          
+          
+          
+          
+          
+          <div class="form-group">
+            <label for="Id" class="col-form-label">Id:</label>
+            <input type="text" class="form-control" id="widEdit" name="wid">
+          </div>
+          <div class="form-group">
+            <label for="name" class="col-form-label">Primary Reader:</label>
+            <input type="text" class="form-control" id="prFullNameEdit" name="primaryReaderFullName">
+			<select class="form-control" id="id" th:field="*{secondaryReaderUid}">									
+				<option value="0">---Select Secondary Reader---</option>
+				<option 
+				th:each="user,iterStat:${users}" 
+			 	th:value="${user.uid}" 
+			 	th:text="${user.lname} + ', ' + ${user.fname}"
+			 	th:if="${user.role} == 'reader'">
+				</option>
+			</select>	
+          </div>
+          <div class="form-group">
+            <label for="name" class="col-form-label">Student:</label>
+            <input type="text" class="form-control" id="studentFullNameEdit" name="studentFullName">
+          </div>
+          <div class="form-group">
+            <label for="name" class="col-form-label">Secondary Reader:</label>
+            <input type="text" class="form-control" id="srFullNameEdit" name="secondaryReaderFullName">
+          </div>
+          <div class="form-group">
+            <label for="updatedOn" class="col-form-label">Workflow Status:</label>
+            <input type="text" class="form-control" id="workflowStatusEdit" name="workflowStatus">
+          </div>
+      </div>
+ -->
