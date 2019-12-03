@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="webjars/jquery/3.4.1/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
+	<meta charset="ISO-8859-1"/>
+	<title>SPED Workflow - Workflow Detail</title>
+</head>
+<body>
+
+<div th:insert="fragments.html :: topnav"></div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-10">
+			<h1> Workflow Detail </h1>
+		</div>
+		<div class="col-md-2">
+			<a class="btn btn-primary" href="#" th:href="@{/workflowdetail/edit}"> Edit </a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<tr>
+				<a th:href="@{${activeWorkflow.portfolioURL}}">Link to Portfolio</a>
+			</tr>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th width="50%">Component</th>
+	                    <th width="20%">Result</th>
+	                    <th width="30%">Comments</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="templateQuestion,itemStat : ${templateQuestions}">
+						<td><span th:text="${templateQuestions[itemStat.index].display}"></span></td>
+						 <td><span th:switch="${!questionResponses.empty} ? ${questionResponses[itemStat.index].response} : 'Not Yet Graded'">
+						 	<p th:case=true>Yes</p>
+						 	<p th:case=false>No</p>
+						 	<p th:case="*">Not Yet Graded</p>
+						 </span>
+						 </td>
+						 <td><span th:text="${!questionResponses.empty} ? ${questionResponses[itemStat.index].comments} : ''">
+						 </span>
+						 </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1> Comments </h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+					
+				</thead>
+				<tbody>
+					<tr th:each="workflowComments,itemStat : ${activeWorkflow.getWorkflowComments()}">
+						<!-- Insert whether primary reader, secondary reader, or final here by whatever attribute that is -->
+						<td><span th:text="${workflowComments.comments}"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</body>
+</html>
