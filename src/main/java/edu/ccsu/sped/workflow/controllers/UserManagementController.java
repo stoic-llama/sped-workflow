@@ -1,7 +1,8 @@
 package edu.ccsu.sped.workflow.controllers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+// import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,17 +40,31 @@ public class UserManagementController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	private Map<String, String> mapRoles = Map.of(
-		"reader", "Reader",
-		"instructor", "Instructor",
-		"coordinator", "Coordinator",
-		"student", "Student"
-	);
-
+	
+	// TODO Replace with a function that locally create Map<String,String> and returns Map
+	// 2/6/2020 - John Liu
+	//	private Map<String, String> mapRoles = Map.of(
+	//		"reader", "Reader",
+	//		"instructor", "Instructor",
+	//		"coordinator", "Coordinator",
+	//		"student", "Student"
+	//	);
+	
+	private Map<String, String> returnRoles() {
+		Map<String,String> mapRoles = new HashMap<String, String>(); { // initialize HashMap Java 8 way
+			mapRoles.put("reader", "Reader");
+			mapRoles.put("instructor", "Instructor");
+			mapRoles.put("coordinator", "Coordinator");
+			mapRoles.put("student", "Student");
+		}
+		return mapRoles;
+	}
+		
 	@GetMapping("")
 	public String userManagement(Model model) {
 		model.addAttribute("users", userService.getUsers());
-		model.addAttribute("mapRoles",mapRoles);
+		model.addAttribute("mapRoles",returnRoles());
+		//model.addAttribute("mapRoles",mapRoles);
 		return "user-management";
 	}
 
@@ -60,7 +75,8 @@ public class UserManagementController {
 		usersForm.addUser(new User());
 		
 		model.addAttribute("form",usersForm);
-		model.addAttribute("mapRoles",mapRoles);
+		model.addAttribute("mapRoles",returnRoles());
+		// model.addAttribute("mapRoles",mapRoles);
 		
 		return "createUsersForm";
 	}
@@ -71,7 +87,8 @@ public class UserManagementController {
 		userService.getUsers().iterator().forEachRemaining(users::add);
 		
 		model.addAttribute("form", new UserCreationDto(users));
-		model.addAttribute("mapRoles",mapRoles);
+		model.addAttribute("mapRoles",returnRoles());
+		// model.addAttribute("mapRoles",mapRoles);
 		
 		return "editUsersForm";
 	}
